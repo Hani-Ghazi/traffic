@@ -3,15 +3,37 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www",
+    "apidocs": "apidoc -i routes/ -o api-doc/"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "bluebird": "^3.4.6",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
+    "crypto": "0.0.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.17.2",
+    "mongoose": "^4.6.6",
+    "mongoose-fill": "^1.6.0",
     "morgan": "~1.8.1",
+    "request": "^2.79.0",
     "serve-favicon": "~2.4.2"
+  },
+  "apidoc": {
+    "name": "Traffic",
+    "version": "0.1.0",
+    "description": "Backend API for Traffic",
+    "title": "Traffic App",
+    "url": "localhost/traffic",
+    "template": {
+      "withCompare": false
+    }
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
