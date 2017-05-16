@@ -102,12 +102,12 @@ userSchema.statics.createUser = function (user) {
   return this.create(user);
 };
 
-userSchema.statics.login = function (username, password) {
-  if (!username || !password) {
-    return Pormise.reject(errors.users.incorrectCreds);
+userSchema.statics.login = function (email, password) {
+  if (! email || !password) {
+    return Promise.reject(errors.users.incorrectCreds);
   }
   return this.findOne({
-    username: username.toLowerCase().trim()
+    email: email.toLowerCase().trim()
   }).then(function (user) {
     if (!user) {
       return Promise.reject();

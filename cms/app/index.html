@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Traffic !!!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png" />
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-nav-tree/dist/abn_tree.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/waves/dist/waves.min.css" />
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
+    <link rel="stylesheet" href="bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css(.tmp) styles/style.css -->
+    <link rel="stylesheet" href="styles/font.css" type="text/css" />
+    <link rel="stylesheet" href="styles/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="styles/material-design-icons.css" type="text/css" />
+    <link rel="stylesheet" href="styles/style.css" type="text/css" />
+    <!-- endbuild -->
+  </head>
+  <body ng-app="trafficCMS" ng-class="{'rtl': app.setting.rtl}">
+    <div class="app" ui-view></div>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap-nav-tree/dist/abn_tree_directive.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+    <script src="bower_components/angular-file-upload/angular-file-upload.min.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/textAngular/dist/textAngular.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/screenfull/dist/screenfull.js"></script>
+    <script src="bower_components/waves/dist/waves.min.js"></script>
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/angular-fullscreen/src/angular-fullscreen.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/remarkable-bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <!-- endbower -->
+    <script src="vendors/marcj-css-element/src/ResizeSensor.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!-- scriptinject begin -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/basic/app.js"></script>
+    <script src="scripts/basic/controllers/dashboardCtrl.js"></script>
+    <script src="scripts/basic/directives/autoFocus.js"></script>
+    <script src="scripts/basic/directives/disableOnLoading.js"></script>
+    <script src="scripts/basic/directives/langSelector.js"></script>
+    <script src="scripts/basic/directives/ngDrabbable.js"></script>
+    <script src="scripts/basic/directives/ngTablePager.js"></script>
+    <script src="scripts/basic/directives/onImageLoad.js"></script>
+    <script src="scripts/basic/directives/roundNumber.js"></script>
+    <script src="scripts/basic/directives/uiNav.js"></script>
+    <script src="scripts/basic/directives/uiToggleClass.js"></script>
+    <script src="scripts/basic/directives/widget.js"></script>
+    <script src="scripts/basic/services/fileUploader.js"></script>
+    <script src="scripts/basic/services/notifyService.js"></script>
+    <script src="scripts/basic/utils.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/i18n/app.js"></script>
+    <script src="scripts/i18n/ar.js"></script>
+    <script src="scripts/i18n/en.js"></script>
+    <script src="scripts/login/app.js"></script>
+    <script src="scripts/login/controllers/loginController.js"></script>
+    <script src="scripts/login/services/authorization.js"></script>
+    <script src="scripts/login/services/authorizationInterceptor.js"></script>
+    <script src="scripts/login/services/session.js"></script>
+    <script src="scripts/models/app.js"></script>
+    <script src="scripts/models/users.js"></script>
+    <script src="scripts/users/app.js"></script>
+    <script src="scripts/users/controllers/userCtrl.js"></script>
+    <script src="scripts/users/controllers/usersCtrl.js"></script>
+    <!-- scriptinject end -->
+    <!-- endbuild -->
+
+  </body>
+</html>

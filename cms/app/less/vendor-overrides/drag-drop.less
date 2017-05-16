@@ -1,0 +1,37 @@
+.drag-container {
+  position: relative;
+  img {
+    width: 100%;
+  }
+}
+.drag-item {
+  position:absolute;
+  width : 30px;
+  height: 40px;
+  background-color: transparent;
+  background-image: url('../images/marker.png');
+  background-size: 30px;
+}
+.poi-div {
+  float: left;
+  width: 100%;
+  border-radius: 5px;
+  &.rtl {
+    float: right;
+    md-input-container {
+      float: right;
+    }
+  }
+  &.selected {
+    border: 1px solid blue;
+  }
+}
+
+.poi-switch {
+  margin: 0;
+  padding: 0;
+  label {
+    font-size: smaller;
+    line-height: 3;
+  }
+}

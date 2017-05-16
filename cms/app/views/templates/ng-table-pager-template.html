@@ -1,0 +1,23 @@
+<div class="ng-cloak ng-table-pager" ng-if="params.data.length">
+  <div class="bulk-action" ng-if="params.parameters().showDeleteAll">
+    <button class="btn btn-danger pull-right" translate="global.actions.deleteAll" ng-click="params.parameters().deleteAll(params)"></button>
+  </div>
+  <div ng-if="params.settings().counts.length" class="ng-table-counts btn-group" ng-table-count-rtl>
+    <button ng-repeat="count in params.settings().counts" type="button" ng-class="{'active':params.count()===count}" ng-click="params.count(count)" class="btn btn-default">
+      <span ng-bind="count"></span>
+    </button>
+  </div>
+  <ul class="pagination ng-table-pagination" ng-table-pager-rtl>
+    <li ng-repeat="page in pages" ng-switch="page.type">
+      <button ng-switch-when="prev" md-ink-ripple="" class="md-btn md-fab m-b" ng-class="{'blue': page.current, 'bg-white': !page.current}" ng-click="params.page(page.number)" ng-disabled="!page.active && !page.current"><i class="mdi-navigation-chevron-left" prev-page></i></button>
+      <button ng-switch-when="first" md-ink-ripple="" class="md-btn md-fab m-b" ng-class="{'blue': page.current, 'bg-white': !page.current}" ng-click="params.page(page.number)" ng-disabled="!page.active && !page.current"><span ng-bind="page.number"></span></button>
+      <button ng-switch-when="page" md-ink-ripple="" class="md-btn md-fab m-b" ng-class="{'blue': page.current, 'bg-white': !page.current}" ng-click="params.page(page.number)" ng-disabled="!page.active && !page.current"><span ng-bind="page.number"></span></button>
+      <button ng-switch-when="more" md-ink-ripple="" class="md-btn md-fab m-b" ng-class="{'blue': page.current, 'bg-white': !page.current}" ng-click="params.page(page.number)" ng-disabled="!page.active && !page.current">&#8230;</button>
+      <button ng-switch-when="last" md-ink-ripple="" class="md-btn md-fab m-b" ng-class="{'blue': page.current, 'bg-white': !page.current}" ng-click="params.page(page.number)" ng-disabled="!page.active && !page.current"><span ng-bind="page.number"></span></button>
+      <button ng-switch-when="next" md-ink-ripple="" class="md-btn md-fab m-b" ng-class="{'blue': page.current, 'bg-white': !page.current}" ng-click="params.page(page.number)" ng-disabled="!page.active && !page.current"><i class="mdi-navigation-chevron-right" next-page></i></button>
+    </li>
+  </ul>
+  <div class="total-text" ng-if="params.parameters().label">
+    <p><span translate="global.ng-table.showing"></span> <span ng-if="pages.length > 0">{{(params.page() - 1) * params.count() + 1}} <span translate="global.ng-table.to"></span> {{params.page() * params.count() > params.total() ? params.total() : params.page() * params.count()}} <span translate="global.ng-table.outOf"></span></span> {{params.total()}} {{params.parameters().label}}</p>
+  </div>
+</div>

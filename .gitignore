@@ -1,3 +1,6 @@
 .idea/
 server/node_modules
 server/api-doc
+cms/node_modules
+cms/bower_components
+cms/.temp

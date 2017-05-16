@@ -36,7 +36,7 @@ module.exports = {
       status: 404
     },
     incorrectCreds: {
-      error: 'number_password_incorrect',
+      error: 'email_password_incorrect',
       code: 106,
       status: 400
     },

@@ -1,0 +1,62 @@
+form.rtl md-input-container label:not(.md-container-ignore) {
+  right: 0;
+  left: initial;
+  padding-left: 0;
+  padding-right: 3px;
+  -webkit-transform-origin: right top;
+  transform-origin: right top;
+}
+
+md-input-container {
+  min-height: 54px;
+}
+
+// datepicker
+.md-datepicker-container {
+  min-height: 54px;
+  padding: 2px;
+  md-datepicker {
+    .md-datepicker-button {
+      display: none;
+    }
+    .md-datepicker-input-container {
+      width: 100%;
+      margin-left: 0;
+      input {
+        padding: 1px 2px;
+      }
+    }
+    &.rtl {
+      .md-datepicker-triangle-button {
+        left: -25px;
+        right: inherit;
+      }
+    }
+  }
+  .validation-messages {
+    font-size: 12px;
+    color: #dd2c00;
+    margin-top: 10px;
+  }
+}
+
+.red-900-text {
+  color: #b71c1c;
+}
+
+body.rtl {
+  .md-dialog-container {
+    direction: rtl;
+  }
+}
+
+.btn-poi {
+  font-size: 14px;
+}
+
+accordion .panel-group {
+  margin: 0;
+  md-content {
+    background-color: white;
+  }
+}

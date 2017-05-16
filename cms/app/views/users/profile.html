@@ -1,0 +1,46 @@
+<form name="userForm" ng-class="{'rtl': app.setting.rtl}" novalidate disable-on-loading="isLoading">
+  <div layout="column" class="card" ng-class="{'rtl': app.setting.rtl}">
+    <div class="card-heading">
+      <h2 translate="user.editPage.myProfile"></h2>
+    </div>
+    <md-content layout-padding>
+      <md-input-container class="md-block">
+        <label translate="user.username"></label>
+        <input required name="userName" ng-model="user.username" auto-focus readonly="true">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label translate="user.email"></label>
+        <input required name="userEmail" ng-model="user.email">
+        <div ng-messages="userForm.userEmail.$error">
+          <div ng-message="required">{{"user.errors.email.required" | translate}}</div>
+        </div>
+      </md-input-container>
+      <md-input-container>
+        <md-button class="md-raised md-primary" translate="user.actions.save" ng-click="saveUser()"></md-button>
+      </md-input-container>
+    </md-content>
+  </div>
+<form>
+  <div layout="column" class="card" ng-class="{'rtl': app.setting.rtl}">
+    <div class="card-heading">
+      <h2 translate="user.editPage.changePassword"></h2>
+    </div>
+    <md-content layout-padding>
+      <md-input-container class="md-block">
+        <label translate="user.oldPassword"></label>
+        <input name="userOldPassword" type="password" ng-model="oldPassword">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label translate="user.newPassword"></label>
+        <input name="userNewPassword" type="password" ng-model="newPassword">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label translate="user.rePassword"></label>
+        <input name="userRePassword" type="password" ng-model="rePassword">
+      </md-input-container>
+      <md-input-container>
+        <md-button class="md-raised md-primary" translate="user.actions.changePassword" ng-click="changePassword()"></md-button>
+      </md-input-container>
+    </md-content>
+  </div>
+<!-- </form> -->
