@@ -1,12 +1,13 @@
 # Traffic App
 
-This app for 
+This app for Project2
 
 ## Prerequisites
 You will need the following things properly installed on your computer.
 * [Node.js](http://nodejs.org/) (latest version with NPM)
 * [Git](http://git-scm.com/)
 * [Grunt](https://gruntjs.com/) (to serve the CMS)
+* [Api docs](http://apidocjs.com/) (install it globaly, it nees sudo permission).
 
 ## Server Installation
 * `cd server`.
@@ -19,3 +20,8 @@ You will need the following things properly installed on your computer.
 * `npm install` (to create the CMS dependencies).
 * `bower isntall` (to create the CMS bower depencdencies).
 * `grunt serve` (to run the CMS website interface).
+
+
+## Create the Docs (make sure you have installed the API docs)
+* `cd server`
+* `apidoc -i routes/ -o api-doc/`
