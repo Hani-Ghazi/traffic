@@ -38,13 +38,13 @@ angular.module('trafficCMS.login')
   };
 
   return {
-    login: function(email, password) {
+    login: function(authField, password) {
       var deferred = $q.defer();
       $http({
         method: 'POST',
         url: API.apiHost + '/users/login',
         data: {
-          email: email,
+          authField: authField,
           password: password
         },
         noToken: true

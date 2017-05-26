@@ -22,7 +22,7 @@ module.exports = {
     })
   },
   login: function (req, res, next) {
-    models.user.login(req.body.email, req.body.password)
+    models.user.login(req.body.authField, req.body.password)
       .then(function (user) {
         // if (!user.isActive) {
         //   return next(errors.users.notVerified);

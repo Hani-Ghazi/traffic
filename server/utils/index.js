@@ -10,12 +10,12 @@ const env = process.env.NODE_ENV || 'development';
 var pseudoRandomBytesAsync = Promise.promisify(crypto.pseudoRandomBytes);
 
 module.exports = {
-  getNewToken: function(userId) {
+  getNewToken: function (userId) {
     return jwt.sign({
       id: userId
     }, config.jwt.secret);
   },
-  parseMongoUniqueError: function(err) {
+  parseMongoUniqueError: function (err) {
     // parsing the error. ref: https://github.com/bevacqua/mongoose-parse
     var parts = /^E11000 duplicate key error (index|collection): (?:[a-z-.]+\.)+([a-z]*) index\: ([a-z]+)_([0-9]+)/i;
     var matches = err && err.errmsg.match(parts);
@@ -26,11 +26,12 @@ module.exports = {
         var error = errors[collectionName][errorKey + 'Exists'];
         err = TrafficError.newError(error);
       }
-      catch(e) {}
+      catch (e) {
+      }
     }
     return err;
   },
-  errorHandler: function(err, req, res, next) {
+  errorHandler: function (err, req, res, next) {
     if (env !== 'production') {
       console.log(err);
     }
@@ -45,6 +46,5 @@ module.exports = {
       err = module.exports.parseMongoUniqueError(err);
     }
     res.status(err.status || 500).json(err);
-  },
-
+  }
 }

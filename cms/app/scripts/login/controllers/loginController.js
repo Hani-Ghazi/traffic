@@ -2,7 +2,7 @@
 
 angular.module('trafficCMS.login')
 .controller('LoginController', function($rootScope, $scope, $filter, $localStorage, session) {
-  $scope.email = '';
+  $scope.authField = '';
   $scope.password = '';
   $scope.errorMessage = '';
   $scope.errorLogin = false;
@@ -15,7 +15,7 @@ angular.module('trafficCMS.login')
 
     $scope.isLoading = true;
     $scope.errorLogin = false;
-    session.login($scope.email, $scope.password).then(function(currentUser) {
+    session.login($scope.authField, $scope.password).then(function(currentUser) {
       $scope.isLoading = false;
       $rootScope.goToMainPage();
     }, function(err) {

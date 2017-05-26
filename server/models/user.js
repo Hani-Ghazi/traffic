@@ -18,6 +18,11 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  phone: {
+      type: String,
+      unique: true,
+      trim: true
+  },
   email: {
     type: String,
     required: true,
@@ -97,12 +102,18 @@ userSchema.statics.createUser = function(user) {
   return this.create(user);
 };
 
-userSchema.statics.login = function(email, password) {
-  if (!email || !password) {
+userSchema.statics.login = function(authField, password) {
+  if (!authField || !password) {
     return Promise.reject(errors.users.incorrectCreds);
   }
   return this.findOne({
-    email: email.toLowerCase().trim()
+      $or: [{
+        email :authField.toLowerCase().trim()
+      }, {
+        phone: authField.toLowerCase().trim()
+      }, {
+        username: authField.toLowerCase().trim()
+      }]
   }).then(function(user) {
     if (!user) {
       return Promise.reject();
@@ -121,7 +132,7 @@ userSchema.statics.createAdmin = function() {
   var userModel = this;
   return this.findOne({
     username: 'admin'
-  }).then(function(admin) {
+  }).then(function(admin) { 
     if (!admin) {
       return userModel.createUser({
         username: 'admin',
@@ -129,7 +140,8 @@ userSchema.statics.createAdmin = function() {
         password: '123456',
         firstName: 'Admin',
         lastName: 'Admin',
-        role: 'admin'
+        role: 'admin',
+        phone: '123456789'
       });
     }
     return Promise.resolve();

@@ -39,6 +39,7 @@ angular.module('trafficCMS.i18n')
     keepMe: 'Keep me signed in',
     submit: 'Login',
     forgotPass: 'Forgot password?',
+    authField: 'Username, Email Or phone',
     error: {
       failed: 'Incorrect username or password!',
       notActvive: 'Your account is inactive. Please contact your system admin.'

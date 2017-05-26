@@ -11,8 +11,8 @@
       <alert type="danger" ng-if="errorLogin">{{errorMessage}}</alert>
       <form name="loginForm" novalidate ng-submit="login()">
         <div class="md-form-group float-label">
-          <input type="email" class="md-input" ng-model="email" required auto-focus>
-          <label translate="login.username" ng-class="{'rtl': app.setting.rtl}"></label>
+          <input type="text" class="md-input" ng-model="authField" required auto-focus>
+          <label translate="login.authField" ng-class="{'rtl': app.setting.rtl}"></label>
         </div>
         <div class="md-form-group float-label">
           <input type="password" class="md-input" ng-model="password" required>
