@@ -65,6 +65,8 @@ angular.module('trafficCMS.i18n')
   },
   user: {
     username: 'Username',
+    firstName: 'First Name',
+    lastName: 'last Name',
     email: 'Email',
     password: 'Password',
     oldPassword: 'Old Password',

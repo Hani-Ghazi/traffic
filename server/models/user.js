@@ -52,14 +52,14 @@ var userSchema = new mongoose.Schema({
 });
 
 // Saves the user's password hashed (plain text password storage is not good)
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
   var user = this;
   if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.genSalt(10, function(err, salt) {
       if (err) {
         return next(err);
       }
-      bcrypt.hash(user.password, salt, function (err, hash) {
+      bcrypt.hash(user.password, salt, function(err, hash) {
         if (err) {
           return next(err);
         }
@@ -72,21 +72,16 @@ userSchema.pre('save', function (next) {
   }
 });
 
-userSchema.statics.getUserByToken = function (token) {
-  // var x = this.findOne({id: token});
-  // return new Promise(function (resolve, reject) {
-  //
-  // })
+userSchema.statics.getUserByToken = function(token) {
   var model = this;
-  return new Promise(function (resolve, reject) {
-    jwt.verify(token, config.jwt.secret, function (err, decoded) {
+  return new Promise(function(resolve, reject) {
+    jwt.verify(token, config.jwt.secret, function(err, decoded) {
       if (err) {
         return reject(err);
-      }
-      else {
+      } else {
         //console.log("this", this);
         return model.findById(decoded.id)
-          .then(function (user) {
+          .then(function(user) {
             if (!user || !user.id) {
               return reject(errors.authRequiredError);
             }
@@ -98,17 +93,17 @@ userSchema.statics.getUserByToken = function (token) {
 
 };
 
-userSchema.statics.createUser = function (user) {
+userSchema.statics.createUser = function(user) {
   return this.create(user);
 };
 
-userSchema.statics.login = function (email, password) {
-  if (! email || !password) {
+userSchema.statics.login = function(email, password) {
+  if (!email || !password) {
     return Promise.reject(errors.users.incorrectCreds);
   }
   return this.findOne({
     email: email.toLowerCase().trim()
-  }).then(function (user) {
+  }).then(function(user) {
     if (!user) {
       return Promise.reject();
     }
@@ -117,10 +112,28 @@ userSchema.statics.login = function (email, password) {
       return Promise.reject(errors.users.incorrectCreds);
     user = user.toObject();
     // don't return password !!!!!
-    delete  user.password;
+    delete user.password;
     return user;
   });
 }
 
+userSchema.statics.createAdmin = function() {
+  var userModel = this;
+  return this.findOne({
+    username: 'admin'
+  }).then(function(admin) {
+    if (!admin) {
+      return userModel.createUser({
+        username: 'admin',
+        email: 'admin@admin.com',
+        password: '123456',
+        firstName: 'Admin',
+        lastName: 'Admin',
+        role: 'admin'
+      });
+    }
+    return Promise.resolve();
+  });
+}
 
 module.exports = mongoose.model('user', userSchema, 'user');

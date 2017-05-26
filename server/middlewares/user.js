@@ -1,5 +1,6 @@
 const models = require('../models');
 const errors = require('../utils/errors');
+const constants = require('../utils/constansts');
 const utils = require('../utils');
 
 var getUserByToken = function (token, additionalFields) {
@@ -45,6 +46,19 @@ module.exports = {
   },
   getCurrentUser: function (req, res, next) {
     res.json(req.registeredUser);
+  },
+  getUsers: function (req, res, next) {
+    var limit = Number(req.query.limit);
+    limit = isNaN(limit) ? 10 : limit;
+    var offset = Number(req.query.skip);
+    offset = isNaN(offset) ? 0 : offset;
+    models.user.getList({
+      skip: offset,
+      limit: limit,
+      projection: constants.user.defaultFields
+    }).then(function(users){
+      res.json(users);
+    }).catch(next);
   }
 };
 

@@ -2,6 +2,9 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const config = require('../config/config');
 
+
+mongoose.plugin(require('./getListPlugin'));
+
 var models = {
   user: require('./user')
 };
@@ -35,7 +38,6 @@ models.connect = function () {
   })
 }
 
-models.connect();
 module.exports = models;
 
 

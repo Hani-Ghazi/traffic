@@ -4,7 +4,7 @@ angular.module('trafficCMS.users')
 .controller('UsersCtrl', function($rootScope, $scope, $filter, $state, $stateParams, NgTableParams, models, utils, notifyService) {
   $scope.usersTable = new NgTableParams({
     page: $stateParams.page || 1,
-    count: 10,
+    count: $stateParams.count || 10,
     filter: $scope.filter
   }, {
     getData: function(params) {

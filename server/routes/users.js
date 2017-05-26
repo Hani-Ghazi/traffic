@@ -127,7 +127,35 @@ router.get('/me', middleware.getCurrentUser)
  * @apiUse InvalidInputErrorExample
  * @apiUse EmailExistsError
  */
-  .post('/signup', middleware.createUser);
+  .post('/signup', middleware.createUser)
+  /**
+   * @api {get} /users Get list of users
+   * @apiName UserList
+   * @apiGroup Users
+   *
+   * @apiUse AccessTokenParams
+   * @apiUse GetListParams
+   * @apiSuccess {[User]} users The array of users
+   * @apiSuccessExample {json} Success Response
+   *   HTTP/1.1 200 OK
+   *   {
+   *     "data": [
+   *       {
+   *         "id": "5850f773d1418c1945a5fdcc",
+   *
+   *         "firstName" : "Admin",
+   *         "lastName" : "Admin",
+   *         "email": "admin@admin.com",
+   *         "role": "admin",
+   *         "isActive": true
+   *       }
+   *     ],
+   *     "count": 1
+   *   }
+   *
+   * @apiUse AuthRequiredError
+   */
+  .get('/', middleware.getUsers);
 
 
 module.exports = router;

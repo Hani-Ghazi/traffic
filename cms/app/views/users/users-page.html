@@ -6,7 +6,8 @@
   <table ng-table="usersTable" class="table table-striped table-vmiddle table-hover table-condensed" ng-class="{'rtl': app.setting.rtl}" template-pagination="views/templates/ng-table-pager-template.html">
     <thead>
     <tr>
-      <th translate="user.username"></th>
+      <th translate="user.firstName"></th>
+      <th translate="user.lastName"></th>
       <th translate="user.email"></th>
       <th translate="user.isActive.title"></th>
       <th></th>
@@ -14,10 +15,11 @@
     </thead>
     <tbody>
     <tr ng-repeat="row in $data" ui-sref="app.user({ user: row, userId: row.id })" ng-if="$data.length">
-      <td>{{row.username}}</td>
+      <td>{{row.firstName}}</td>
+      <td>{{row.lastName}}</td>
       <td>{{row.email}}</td>
       <td>{{'user.isActive.' + row.isActive | translate}}</td>
-      <td><md-button type="button" class="md-raised" ng-class="{'red-500': row.isActive, 'green-500': !row.isActive}" ng-click="$event.stopPropagation();deactivateUser(row, $event)" ng-if="row.username !== 'admin' && row.id !== currentUser.id"><i class="mdi" ng-class="{'mdi-content-block': row.isActive, 'mdi-action-done': !row.isActive}"></i></md-button></td>
+      <td><md-button type="button" class="md-raised" ng-class="{'red-500': row.isActive, 'green-500': !row.isActive}" ng-click="$event.stopPropagation();deactivateUser(row, $event)"><i class="mdi" ng-class="{'mdi-content-block': row.isActive, 'mdi-action-done': !row.isActive}"></i></md-button></td>
     </tr>
     <tr ng-if="!$data.length && !isLoading && !isError">
       <td class="no-data-cell" colspan="5" translate="user.listPage.noData"></td>
