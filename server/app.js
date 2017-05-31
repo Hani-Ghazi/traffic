@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var config = require('./config/config');
 var models = require('./models/index');
 var utils = require('./utils');
+var parseFile = require('./utils/tempFile');
 
 var usersRoutes = require('./routes/users');
 var app = express();
@@ -32,5 +33,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(utils.errorHandler);
+
+parseFile.parseExcel();
 
 module.exports = app;

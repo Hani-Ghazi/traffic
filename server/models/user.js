@@ -4,7 +4,6 @@ var jwt = require('jsonwebtoken');
 const Promise = require('bluebird');
 const config = require('../config/config');
 const errors = require('../utils/errors');
-const userModel = require('./user');
 
 var userSchema = new mongoose.Schema({
   username: {

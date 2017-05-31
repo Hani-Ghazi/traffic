@@ -6,7 +6,10 @@ const config = require('../config/config');
 mongoose.plugin(require('./getListPlugin'));
 
 var models = {
-  user: require('./user')
+  user: require('./user'),
+  bus: require('./bus'),
+  stop: require('./stops'),
+  busStop: require('./busStop')
 };
 
 var schemas = Object.keys(models).map(function (key) {

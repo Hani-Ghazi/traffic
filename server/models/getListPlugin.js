@@ -27,6 +27,7 @@ module.exports = exports = function getListPlugin(schema, options) {
       else {
         query.populate(params.populate);
       }
+
     }
     return Promise.props({
       data: query.skip(params.skip).limit(params.limit),

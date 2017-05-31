@@ -14,6 +14,7 @@
     "cors": "^2.8.3",
     "crypto": "0.0.3",
     "debug": "~2.6.3",
+    "exceljs": "^0.4.10",
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.1.9",
@@ -21,6 +22,7 @@
     "mongoose": "^4.6.6",
     "mongoose-fill": "^1.6.0",
     "morgan": "~1.8.1",
+    "node-xlsx": "^0.7.4",
     "request": "^2.79.0",
     "serve-favicon": "~2.4.2"
   },

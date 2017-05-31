@@ -60,6 +60,7 @@ const router = express.Router();
  * "role" : "client",
  * "language" : "en",
  * "isActive" : false,
+ * "phone" : ""0958446790",
  * "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5MTc0ZThhNzJmMjg2N2FlMmNkNTcxNyIsImlhdCI6MTQ5NDg4Mjk4NX0.LlfZSHBUDSnS6qD8tXPjUJuJQAzCbkC-PbYOyDagyz8"
  * }
  * @apiError (Error: IncorrectCredentials 400) IncorrectCredentials The <code>username</code> or <code>password</code> is invalid.
@@ -102,12 +103,14 @@ router.get('/me', middleware.getCurrentUser)
  * @apiParam (Body) {String='en','ar'} language The user's language device, the default is <code>en</code>
  * @apiParam (Body) {String} email The user's email
  * @apiParam (Body) {String} password The password
+ * @apiParam (Body) {String} phone The phone
  * @apiParamExample {json} Sample Params
  * {
  * "email" : "admin@admin.com",
  * "firstName" : "Admin",
  * "lastName" : "Admin",
- * "language" : "en"
+ * "language" : "en",
+ * "phone" : ""0958446790"
  * }
  *
  * @apiSuccess {User} user The logged in user
@@ -120,6 +123,7 @@ router.get('/me', middleware.getCurrentUser)
  * "role" : "client",
  * "language" : "en",
  * "isActive" : false,
+ * "phone" : "0958446790",
  * "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5MTc0ZThhNzJmMjg2N2FlMmNkNTcxNyIsImlhdCI6MTQ5NDg4Mjk4NX0.LlfZSHBUDSnS6qD8tXPjUJuJQAzCbkC-PbYOyDagyz8"
  * }
  *
@@ -142,7 +146,6 @@ router.get('/me', middleware.getCurrentUser)
    *     "data": [
    *       {
    *         "id": "5850f773d1418c1945a5fdcc",
-   *
    *         "firstName" : "Admin",
    *         "lastName" : "Admin",
    *         "email": "admin@admin.com",
