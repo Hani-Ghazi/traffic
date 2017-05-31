@@ -94,7 +94,7 @@ router.use(middleware.checkLogin);
  */
 router.get('/me', middleware.getCurrentUser)
 /**
- * @api {post} /users/signup signup with email & password
+ * @api {post} /users signup with email & password
  * @apiName UserSignup
  * @apiGroup Users
  *
@@ -131,7 +131,7 @@ router.get('/me', middleware.getCurrentUser)
  * @apiUse InvalidInputErrorExample
  * @apiUse EmailExistsError
  */
-  .post('/signup', middleware.createUser)
+  .post('/', middleware.createUser)
   /**
    * @api {get} /users Get list of users
    * @apiName UserList

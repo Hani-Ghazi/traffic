@@ -34,6 +34,6 @@ app.use(function(req, res, next) {
 
 app.use(utils.errorHandler);
 
-parseFile.parseExcel();
+// parseFile.parseExcel();
 
 module.exports = app;

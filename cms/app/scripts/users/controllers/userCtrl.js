@@ -5,6 +5,7 @@ angular.module('trafficCMS.users')
   $scope.user = user;
   $scope.isNew = angular.isUndefined($scope.user.id) || $scope.user.id === '';
   $scope.password = '';
+  $scope.rePassword = '';
 
   $scope.saveUser = function() {
     if ($scope.isLoading) {

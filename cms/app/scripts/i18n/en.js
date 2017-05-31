@@ -110,9 +110,12 @@ angular.module('trafficCMS.i18n')
       error: 'Error in activating user!!'
     },
     errors: {
-      'name.required': 'Username is required',
+      'username.required': 'Username is required',
+      'firstName.required': 'First name is required',
+      'lastName.required': 'Last name is required',
       'email.required': 'Email is required',
       'password.required': 'Password is required',
+      'password.notMatch': 'Passwords are not match!',
       formNotValid: 'Please make sure all mandatory fields are filled.',
       saveError: 'An error occurred while saving the user. Please try again.',
       changePassword: 'An error occurred while changing the password. Please try again.',
