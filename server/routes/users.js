@@ -80,19 +80,7 @@ const router = express.Router();
  */
 router.post('/login', middleware.login);
 
-//the rest need to check login first !!
-router.use(middleware.checkLogin);
 
-/**
- * @api {get} /users/me Get the logged in user
- * @apiName CMSGetMe
- * @apiGroup Users
- *
- * @apiUse AccessTokenParams
- * @apiSuccess {User} user The logged in user
- * @apiUse AuthRequiredError
- */
-router.get('/me', middleware.getCurrentUser)
 /**
  * @api {post} /users/signup signup with email & password
  * @apiName UserSignup
@@ -131,7 +119,23 @@ router.get('/me', middleware.getCurrentUser)
  * @apiUse InvalidInputErrorExample
  * @apiUse EmailExistsError
  */
-  .post('/signup', middleware.createUser)
+  router.post('/signup', middleware.createUser)
+
+
+//the rest need to check login first !!
+router.use(middleware.checkLogin);
+
+/**
+ * @api {get} /users/me Get the logged in user
+ * @apiName CMSGetMe
+ * @apiGroup Users
+ *
+ * @apiUse AccessTokenParams
+ * @apiSuccess {User} user The logged in user
+ * @apiUse AuthRequiredError
+ */
+router.get('/me', middleware.getCurrentUser)
+
   /**
    * @api {get} /users Get list of users
    * @apiName UserList
