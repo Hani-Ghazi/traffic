@@ -38,7 +38,8 @@ module.exports = {
       password: req.body.password,
       language: req.body.language,
       firstName: req.body.firstName,
-      lastName: req.body.lastName
+      lastName: req.body.lastName,
+      phone: req.body.phone
     }).then(function (user) {
         res.json(user);
       }
