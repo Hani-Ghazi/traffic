@@ -29,6 +29,7 @@ angular.module('trafficCMS.i18n')
       dashboard: 'Dashboard',
       maps: 'Maps',
       users: 'Users',
+      buses: 'Buses',
       categories: 'Categories'
     }
   },
@@ -125,6 +126,11 @@ angular.module('trafficCMS.i18n')
     },
     'changePassword.success': 'Password changed successfully',
     'save.success': 'User saved successfully'
+  },
+  buses: {
+    listPage: {
+      title: 'Buses'
+    }
   },
   map: {
     name: 'Title',

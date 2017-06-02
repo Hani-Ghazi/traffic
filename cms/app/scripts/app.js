@@ -29,7 +29,8 @@ angular.module('trafficCMS', [
   'trafficCMS.models',
   'trafficCMS.login',
   'trafficCMS.basic',
-  'trafficCMS.users'
+  'trafficCMS.users',
+  'trafficCMS.buses'
 ]).constant('_', _).config(function($stateProvider, $urlRouterProvider, $localStorageProvider, $mdDateLocaleProvider) {
   $localStorageProvider.setKeyPrefix('trafficCMS');
   $urlRouterProvider.otherwise('/app/users');

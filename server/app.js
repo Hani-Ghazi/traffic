@@ -11,6 +11,7 @@ var utils = require('./utils');
 var parseFile = require('./utils/tempFile');
 
 var usersRoutes = require('./routes/users');
+var busesRoutes = require('./routes/buses');
 var app = express();
 
 
@@ -24,6 +25,7 @@ app.use(require('cors')());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRoutes);
+app.use('/buses', busesRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

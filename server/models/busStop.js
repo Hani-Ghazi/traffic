@@ -9,7 +9,7 @@ var busStopSchema = new mongoose.Schema({
   stopId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'bus'
+    ref: 'stop'
   }
 });
 

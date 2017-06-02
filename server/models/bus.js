@@ -24,4 +24,17 @@ var busSchema = new mongoose.Schema({
 });
 
 
+busSchema.statics.getBusById = function (busId) {
+  if(! busId || busId === '')
+    return Promise.reject(errors.missingData);
+  return this.findById(busId)
+    .then(function(bus){
+      if(! bus)
+        return Promise.reject();
+      bus = bus.toObject();
+      delete bus.busId;
+      return bus;
+    });
+};
+
 module.exports = mongoose.model('bus', busSchema, 'bus');

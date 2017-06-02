@@ -16,8 +16,10 @@ angular.module('trafficCMS.models', [])
     return extractedData;
   });
 })
-.factory('models', function(User) {
+.factory('models', function(User, Bus, Stop) {
   return {
-    user: User
+    user: User,
+    bus: Bus,
+    stop: Stop
   };
 });

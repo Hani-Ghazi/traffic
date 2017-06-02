@@ -24,9 +24,6 @@ module.exports = {
   login: function (req, res, next) {
     models.user.login(req.body.authField, req.body.password)
       .then(function (user) {
-        // if (!user.isActive) {
-        //   return next(errors.users.notVerified);
-        // }
         user.token = utils.getNewToken(user.id);
         res.json(user);
       }).catch(next);

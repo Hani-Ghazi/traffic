@@ -83,7 +83,6 @@ userSchema.statics.getUserByToken = function(token) {
       if (err) {
         return reject(err);
       } else {
-        //console.log("this", this);
         return model.findById(decoded.id)
           .then(function(user) {
             if (!user || !user.id) {

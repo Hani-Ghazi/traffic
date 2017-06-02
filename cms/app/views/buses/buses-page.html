@@ -1,0 +1,34 @@
+<div class="panel panel-default table-responsive">
+  <div class="panel-heading" ng-class="{'dir-rtl': app.setting.rtl}">
+    <h2 translate="buses.listPage.title"></h2>
+    <md-button ng-if="currentUser.permissions.buses.edit" class="md-raised md-primary" ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}" translate="user.actions.new" ui-sref="app.user({ userId: 'new' })"></md-button>
+  </div>
+  <table ng-table="busesTable" class="table table-striped table-vmiddle table-hover table-condensed" ng-class="{'rtl': app.setting.rtl}" template-pagination="views/templates/ng-table-pager-template.html">
+    <thead>
+    <tr>
+      <th translate="buses.name"></th>
+      <th translate="buses.stopsNumber"></th>
+      <th translate="user.length"></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in $data" ui-sref="app.user({ user: row, userId: row.id })" ng-if="$data.length">
+      <td>{{row.firstName}}</td>
+      <td>{{row.lastName}}</td>
+      <td>{{row.email}}</td>
+      <td>{{'user.isActive.' + row.isActive | translate}}</td>
+      <td><md-button type="button" class="md-raised" ng-if="row._id !== currentUser._id" ng-class="{'red-500': row.isActive, 'green-500': !row.isActive}" ng-click="$event.stopPropagation();deactivateUser(row, $event)"><i class="mdi" ng-class="{'mdi-content-block': row.isActive, 'mdi-action-done': !row.isActive}"></i></md-button></td>
+    </tr>
+    <tr ng-if="!$data.length && !isLoading && !isError">
+      <td class="no-data-cell" colspan="5" translate="user.listPage.noData"></td>
+    </tr>
+    <tr ng-if="isLoading">
+      <td class="no-data-cell" colspan="5" translate="global.loadingData"></td>
+    </tr>
+    <tr ng-if="isError">
+      <td class="no-data-cell" colspan="5" translate="global.errorData"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
