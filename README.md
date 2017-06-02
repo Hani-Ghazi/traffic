@@ -18,7 +18,7 @@ You will need the following things properly installed on your computer.
 ## CMS Installation
 * `cd cms`.
 * `npm install` (to create the CMS dependencies).
-* `bower isntall` (to create the CMS bower depencdencies).
+* `bower install` (to create the CMS bower depencdencies).
 * `grunt serve` (to run the CMS website interface).
 
 
