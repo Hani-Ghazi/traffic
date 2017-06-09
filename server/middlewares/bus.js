@@ -44,5 +44,12 @@ module.exports = {
       .then(function (stops) {
         res.json(stops);
       }).catch(next);
+  },
+  getBusesByStopId:function (req, res, next) {
+    models.busStop.find({stopId: req.params.stopId})
+      .populate('busId', constants.bus.defaultFields)
+      .then(function (buses) {
+        res.json(buses);
+      }).catch(next);
   }
 }

@@ -93,32 +93,32 @@ router.get('/', middleware.getBuses)
          "__v": 0,
          "id": "592f19c167c5161f00d63156"
        },
-       {
-         "_id": "592f19c167c5161f00d63158",
-         "busId": "592f19c167c5161f00d630a8",
-         "stopId": {
-           "_id": "592f19c167c5161f00d630bb",
-           "arName": "جسر فكتوريا",
-           "long": 33.513819,
-           "lat": 36.295341,
-           "id": "592f19c167c5161f00d630bb"
-         },
-         "__v": 0,
-         "id": "592f19c167c5161f00d63158"
-       },
-       {
-         "_id": "592f19c167c5161f00d63157",
-         "busId": "592f19c167c5161f00d630a8",
-         "stopId": {
-           "_id": "592f19c167c5161f00d630ba",
-           "arName": "شارع شكري القوتلي",
-           "long": 33.513489,
-           "lat": 36.28987,
-           "id": "592f19c167c5161f00d630ba"
-         },
-         "__v": 0,
-         "id": "592f19c167c5161f00d63157"
-       }]
+   {
+     "_id": "592f19c167c5161f00d63158",
+     "busId": "592f19c167c5161f00d630a8",
+     "stopId": {
+       "_id": "592f19c167c5161f00d630bb",
+       "arName": "جسر فكتوريا",
+       "long": 33.513819,
+       "lat": 36.295341,
+       "id": "592f19c167c5161f00d630bb"
+     },
+     "__v": 0,
+     "id": "592f19c167c5161f00d63158"
+   },
+   {
+     "_id": "592f19c167c5161f00d63157",
+     "busId": "592f19c167c5161f00d630a8",
+     "stopId": {
+       "_id": "592f19c167c5161f00d630ba",
+       "arName": "شارع شكري القوتلي",
+       "long": 33.513489,
+       "lat": 36.28987,
+       "id": "592f19c167c5161f00d630ba"
+     },
+     "__v": 0,
+     "id": "592f19c167c5161f00d63157"
+   }]
    *
    * @apiUse AuthRequiredError
    */
@@ -143,4 +143,44 @@ router.get('/', middleware.getBuses)
    * @apiUse AuthRequiredError
    */
   .get('/:busId', middleware.getBusById)
+
+  /**
+   * @api {get} /buses/stops/stop_id Get list of all buses that's across in specific bus stop
+   * @apiName busesByStop
+   * @apiGroup Buses and Stops
+   *
+   * @apiUse AccessTokenParams
+   * @apiSuccess {[Data]} buses The array of buses lines
+   * @apiSuccessExample {json} Success Response
+   *   HTTP/1.1 200 OK
+   [
+     {
+       "_id": "592f19c167c5161f00d63156",
+       "busId": {
+         "_id": "592f19c167c5161f00d630a8",
+         "arName": "الشيخ خالد",
+         "enName": " ",
+         "id": "592f19c167c5161f00d630a8"
+       },
+       "stopId": "592f19c167c5161f00d630b9",
+       "__v": 0,
+       "id": "592f19c167c5161f00d63156"
+     },
+     {
+       "_id": "592f19c167c5161f00d63167",
+       "busId": {
+         "_id": "592f19c167c5161f00d630a9",
+         "arName": "مشروع دمرح_مساكن الحرس",
+         "enName": " ",
+         "id": "592f19c167c5161f00d630a9"
+       },
+       "stopId": "592f19c167c5161f00d630b9",
+       "__v": 0,
+       "id": "592f19c167c5161f00d63167"
+     }
+   ]
+   *
+   * @apiUse AuthRequiredError
+   */
+  .get('/stops/:stopId', middleware.getBusesByStopId)
 module.exports = router;
