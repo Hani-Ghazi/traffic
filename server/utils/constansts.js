@@ -3,7 +3,7 @@ var constants = {
     defaultFields: 'firstName lastName isActive email role'
   },
   bus: {
-    defaultFields: 'arName enName lenght'
+    defaultFields: 'arName enName length'
   },
   stop: {
     defautlFields: 'arName enName lat long'
