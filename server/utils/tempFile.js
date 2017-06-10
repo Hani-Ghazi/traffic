@@ -18,7 +18,7 @@ module.exports = {
             busId: bus[0],
             arName: bus[1],
             enName: ' ',
-            lenght: bus[2]
+            length: bus[2]
           }).catch(reject);
         }
       });
@@ -47,8 +47,8 @@ module.exports = {
               var busId = _.find(buses, {busId: busStop[1]});
               var stopId = _.find(stops, {stopId: busStop[2]});
               models.busStop.create({
-                busId: busId._id,
-                stopId: stopId._id
+                bus: busId._id,
+                stop: stopId._id
               }, function (err) {
                 if (err) {
                   console.log(err);

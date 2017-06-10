@@ -17,7 +17,7 @@ var busSchema = new mongoose.Schema({
     required: true,
     defautl: ' ',
   },
-  lenght: {
+  length: {
     type: Number,
     required: true
   }

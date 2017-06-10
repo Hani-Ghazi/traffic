@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 var busStopSchema = new mongoose.Schema({
-  busId: {
+  bus: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'bus'
   },
-  stopId: {
+  stop: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'stop'
