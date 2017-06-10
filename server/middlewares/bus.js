@@ -8,7 +8,7 @@ module.exports = {
   getBuses: function (req, res, next) {
     var limit = Number(req.query.limit);
     limit = isNaN(limit) ? 10 : limit;
-    var offset = Number(req.query.skip);
+    var offset = Number(req.query.offset);
     offset = isNaN(offset) ? 0 : offset;
     models.bus.getList({
       skip: offset,
