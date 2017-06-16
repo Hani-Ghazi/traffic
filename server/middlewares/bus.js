@@ -39,8 +39,8 @@ module.exports = {
     }).catch(next);
   },
   getStopsByBusId: function(req, res, next){
-    models.busStop.find({busId: req.params.busId})
-      .populate('stopId', constants.stop.defautlFields)
+    models.busStop.find({bus: req.params.busId})
+      .populate('stop', constants.stop.defautlFields)
       .then(function (stops) {
         res.json(stops);
       }).catch(next);

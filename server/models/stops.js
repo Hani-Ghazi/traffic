@@ -12,14 +12,14 @@ var stopsSchema = new mongoose.Schema({
     },
     enName: {
         type: String,
-        // required: true,
+        required: true,
         defautl: ' '
     },
     lat: {
         type: Number,
         required: true
     },
-    long: {
+    lng: {
         type: Number,
         required: true
     }

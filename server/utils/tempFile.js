@@ -28,8 +28,9 @@ module.exports = {
           models.stop.create({
             stopId: stop[0],
             arName: stop[1],
-            long: stop[2],
-            lat: stop[3]
+            enName: ' ',
+            lat: stop[2],
+            lng: stop[3]
           }).catch(reject);
         }
       });
