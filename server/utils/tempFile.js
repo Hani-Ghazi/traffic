@@ -4,13 +4,23 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 
 module.exports = {
+
+  clearTables: function () {
+    return models.bus.remove().then(function () {
+      return models.stop.remove();
+    }).then(function () {
+      return models.busStop.remove();
+    });
+
+
+  },
   parseExcel: function () {
     var obj = xlsx.parse(__dirname + '/routes.xlsx'); // parses a file
     var buses = obj[0].data,
       stops = obj[1].data,
       busStops = obj[2].data;
 
-    new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
       // loop for buses
       buses.forEach(function (bus, index) {
         if (index && bus) {
@@ -35,29 +45,32 @@ module.exports = {
         }
       });
       resolve();
-    }).then(function () {
-      models.bus.find({}, function (err, buses) {
-        if (err) {
-          console.log(err);
-          throw err;
-        }
-        models.stop.find({}, '_id stopId', function (err, stops) {
-          if (err) throw err;
-          busStops.forEach(function (busStop, index) {
-            if (index) {
-              var busId = _.find(buses, {busId: busStop[1]});
-              var stopId = _.find(stops, {stopId: busStop[2]});
-              models.busStop.create({
-                bus: busId._id,
-                stop: stopId._id
-              }, function (err) {
-                if (err) {
-                  console.log(err);
-                  throw err;
-                }
-              });
-            }
-          });
+    })
+  },
+  insertKsr: function () {
+    var obj = xlsx.parse(__dirname + '/routes.xlsx'); // parses a file
+    var busStops = obj[2].data;
+    models.bus.find({}, function (err, buses) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      models.stop.find({}, '_id stopId', function (err, stops) {
+        if (err) throw err;
+        busStops.forEach(function (busStop, index) {
+          if (index) {
+            var busId = _.find(buses, {busId: busStop[1]});
+            var stopId = _.find(stops, {stopId: busStop[2]});
+            models.busStop.create({
+              bus: busId._id,
+              stop: stopId._id
+            }, function (err) {
+              if (err) {
+                console.log(err);
+                throw err;
+              }
+            });
+          }
         });
       });
     });

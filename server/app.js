@@ -36,6 +36,13 @@ app.use(function(req, res, next) {
 
 app.use(utils.errorHandler);
 
-parseFile.parseExcel();
+// first run this
+// parseFile.clearTables().then(function () {
+//   parseFile.parseExcel().then(function () {
+//   });
+// });
+
+// then uncomment this
+parseFile.insertKsr();
 
 module.exports = app;

@@ -11,9 +11,7 @@ var stopsSchema = new mongoose.Schema({
         required: true
     },
     enName: {
-        type: String,
-        required: true,
-        defautl: ' '
+        type: String
     },
     lat: {
         type: Number,
