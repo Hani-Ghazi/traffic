@@ -6,7 +6,7 @@ var constants = {
     defaultFields: 'arName enName length'
   },
   stop: {
-    defautlFields: 'arName enName lat long'
+    defautlFields: 'arName enName lat lng'
   }
 };
 
