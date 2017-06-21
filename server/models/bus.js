@@ -20,6 +20,9 @@ var busSchema = new mongoose.Schema({
   length: {
     type: Number,
     required: true
+  },
+  stopsCount: {
+    type: Number
   }
 });
 

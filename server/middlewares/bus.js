@@ -14,8 +14,8 @@ module.exports = {
       skip: offset,
       limit: limit,
       projection: constants.bus.defaultFields
-    }).then(function (users) {
-      res.json(users);
+    }).then(function (buses) {
+      res.json(buses);
     }).catch(next);
   },
   getBusById: function (req, res, next) {

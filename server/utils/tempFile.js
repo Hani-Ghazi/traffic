@@ -74,6 +74,21 @@ module.exports = {
         });
       });
     });
+  },
+  countStops: function () {
+    models.bus.find({})
+      .then(function (buses) {
+        if(!buses) return ;
+        buses.forEach(function(bus){
+          models.busStop.find({bus: bus.id})
+            .then(function(stops){
+              bus.stopsCount = stops.length;
+              bus.save(function (err) {
+                if(err) console.log("errr is: "+ err);
+              });
+            });
+        });
+      });
   }
 }
 
