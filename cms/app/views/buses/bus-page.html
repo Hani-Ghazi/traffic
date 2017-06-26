@@ -1,0 +1,55 @@
+<div layout="column" class="card" ng-class="{'rtl': app.setting.rtl}">
+    <div class="card-heading">
+        <h2>{{isNew ? 'user.editPage.new' : 'user.editPage.edit' | translate}}</h2>
+    </div>
+    <md-content layout-padding>
+        <form name="userForm" ng-class="{'rtl': app.setting.rtl}" novalidate disable-on-loading="isLoading">
+            <md-input-container class="md-block">
+                <label translate="user.username"></label>
+                <input required name="userName" ng-model="user.username" auto-focus ng-readonly="!isNew">
+                <div ng-messages="userForm.userName.$error">
+                    <div ng-message="required">{{"user.errors.username.required" | translate}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate="user.firstName"></label>
+                <input required name="firstName" ng-model="user.firstName" ng-readonly="!isNew">
+                <div ng-messages="userForm.firstName.$error">
+                    <div ng-message="required">{{"user.errors.firstName.required" | translate}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate="user.lastName"></label>
+                <input required name="lastName" ng-model="user.lastName" ng-readonly="!isNew">
+                <div ng-messages="userForm.lastName.$error">
+                    <div ng-message="required">{{"user.errors.lastName.required" | translate}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate="user.email"></label>
+                <input required name="userEmail" ng-model="user.email">
+                <div ng-messages="userForm.userEmail.$error">
+                    <div ng-message="required">{{"user.errors.email.required" | translate}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate="user.password"></label>
+                <input required name="userPassword" ng-model="password" type="password">
+                <div ng-messages="userForm.userPassword.$error">
+                    <div ng-message="required">{{"user.errors.password.required" | translate}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" ng-if="isNew">
+                <label translate="user.rePassword"></label>
+                <input required name="userRePassword" ng-model="rePassword" ng-match="password" type="password">
+                <div ng-messages="userForm.userRePassword.$error || userForm.userRePassword.$error.match">
+                    <div ng-message="required">{{"user.errors.rePassword.required" | translate}}</div>
+                    <div ng-message="match">{{"user.errors.password.notMatch" | translate}}</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <md-button class="md-raised md-primary" translate="user.actions.save" ng-click="saveUser()"></md-button>
+            </md-input-container>
+        </form>
+    </md-content>
+</div>

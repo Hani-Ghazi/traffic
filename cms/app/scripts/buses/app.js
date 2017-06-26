@@ -5,7 +5,7 @@ angular.module('trafficCMS.buses', [])
     $stateProvider.state('app.buses', {
       url: '/buses?page&count',
       templateUrl: 'views/buses/buses-page.html',
-      controller: 'BusesCtrl',
+      controller: 'busesCtrl',
       data: {
         requiredPermission: 'buses.list'
       },
@@ -17,7 +17,7 @@ angular.module('trafficCMS.buses', [])
     }).state('app.bus', {
       url: '/buses/:busId',
       templateUrl: 'views/buses/bus-page.html',
-      controller: 'BusCtrl',
+      controller: 'busCtrl',
       params: {
         bus: null
       },
@@ -26,7 +26,7 @@ angular.module('trafficCMS.buses', [])
         child: true
       },
       resolve: {
-        user: function($rootScope, $q, $state, $stateParams, authorization, models) {
+        bus: function($rootScope, $q, $state, $stateParams, authorization, models) {
           return authorization.authorize().then(function() {
             var deferred = $q.defer();
             if (angular.isDefined($stateParams.bus) && $stateParams.bus !== null) {

@@ -13,12 +13,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="row in $data" ui-sref="app.user({ user: row, userId: row.id })" ng-if="$data.length">
-      <td>{{row.firstName}}</td>
-      <td>{{row.lastName}}</td>
-      <td>{{row.email}}</td>
-      <td>{{'user.isActive.' + row.isActive | translate}}</td>
-      <td><md-button type="button" class="md-raised" ng-if="row._id !== currentUser._id" ng-class="{'red-500': row.isActive, 'green-500': !row.isActive}" ng-click="$event.stopPropagation();deactivateUser(row, $event)"><i class="mdi" ng-class="{'mdi-content-block': row.isActive, 'mdi-action-done': !row.isActive}"></i></md-button></td>
+    <tr ng-repeat="row in $data" ng-if="$data.length">
+      <td>{{row.arName }}</td>
+      <td>{{row.length}}</td>
     </tr>
     <tr ng-if="!$data.length && !isLoading && !isError">
       <td class="no-data-cell" colspan="5" translate="user.listPage.noData"></td>
