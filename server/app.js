@@ -43,8 +43,8 @@ app.use(utils.errorHandler);
 // });
 
 // then uncomment this
-//parseFile.insertKsr();
+// parseFile.insertKsr();
 
-parseFile.countStops();
+// parseFile.countStops();
 
 module.exports = app;

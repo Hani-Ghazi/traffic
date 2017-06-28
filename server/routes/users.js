@@ -158,7 +158,20 @@ router.get('/me', middleware.getCurrentUser)
    *
    * @apiUse AuthRequiredError
    */
-  .get('/', middleware.getUsers);
+  .get('/', middleware.getUsers)
+  /**
+   * @api {post} /api/users/register_device Register user to receive push
+   * @apiName UserRegisterDevice
+   * @apiGroup User
+   *
+   * @apiUse AccessTokenParams
+   * @apiParam (Body) {String} token The token to register the device
+   *
+   * @apiSuccess {Null} response No response just 204 status code
+   *
+   * @apiUse AuthRequiredError
+   */
+  .get('/register_device', middleware.registerDevice);
 
 
 module.exports = router;

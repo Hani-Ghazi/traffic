@@ -18,9 +18,9 @@ var userSchema = new mongoose.Schema({
     required: true
   },
   phone: {
-      type: String,
-      unique: true,
-      trim: true
+    type: String,
+    unique: true,
+    trim: true
   },
   email: {
     type: String,
@@ -52,18 +52,19 @@ var userSchema = new mongoose.Schema({
     type: 'String',
     enum: ['client', 'admin'],
     default: 'client'
-  }
+  },
+  devices: [String]
 });
 
 // Saves the user's password hashed (plain text password storage is not good)
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   var user = this;
   if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.genSalt(10, function (err, salt) {
       if (err) {
         return next(err);
       }
-      bcrypt.hash(user.password, salt, function(err, hash) {
+      bcrypt.hash(user.password, salt, function (err, hash) {
         if (err) {
           return next(err);
         }
@@ -76,15 +77,15 @@ userSchema.pre('save', function(next) {
   }
 });
 
-userSchema.statics.getUserByToken = function(token) {
+userSchema.statics.getUserByToken = function (token) {
   var model = this;
-  return new Promise(function(resolve, reject) {
-    jwt.verify(token, config.jwt.secret, function(err, decoded) {
+  return new Promise(function (resolve, reject) {
+    jwt.verify(token, config.jwt.secret, function (err, decoded) {
       if (err) {
         return reject(err);
       } else {
         return model.findById(decoded.id)
-          .then(function(user) {
+          .then(function (user) {
             if (!user || !user.id) {
               return reject(errors.authRequiredError);
             }
@@ -96,23 +97,23 @@ userSchema.statics.getUserByToken = function(token) {
 
 };
 
-userSchema.statics.createUser = function(user) {
+userSchema.statics.createUser = function (user) {
   return this.create(user);
 };
 
-userSchema.statics.login = function(authField, password) {
+userSchema.statics.login = function (authField, password) {
   if (!authField || !password) {
     return Promise.reject(errors.users.incorrectCreds);
   }
   return this.findOne({
-      $or: [{
-        email :authField.toLowerCase().trim()
-      }, {
-        phone: authField.toLowerCase().trim()
-      }, {
-        username: authField.toLowerCase().trim()
-      }]
-  }).then(function(user) {
+    $or: [{
+      email: authField.toLowerCase().trim()
+    }, {
+      phone: authField.toLowerCase().trim()
+    }, {
+      username: authField.toLowerCase().trim()
+    }]
+  }).then(function (user) {
     if (!user) {
       return Promise.reject();
     }
@@ -126,11 +127,11 @@ userSchema.statics.login = function(authField, password) {
   });
 }
 
-userSchema.statics.createAdmin = function() {
+userSchema.statics.createAdmin = function () {
   var userModel = this;
   return this.findOne({
     username: 'admin'
-  }).then(function(admin) { 
+  }).then(function (admin) {
     if (!admin) {
       return userModel.createUser({
         username: 'admin',
@@ -143,6 +144,25 @@ userSchema.statics.createAdmin = function() {
       });
     }
     return Promise.resolve();
+  });
+}
+
+userSchema.methods.registerDevice = function (token) {
+  var thisModels = this;
+  return models.model('user').find({
+    devices: token
+  }).then(function (users) {
+    // remove the token from all other users so we don't mix notifications for multiple users on the same device
+    return Promise.each(users, function (user) {
+      user.get('devices').remove(token);
+      return user.save();
+    });
+  }).then(function () {
+    return utils.registerDevice(token);
+  }).then(function () {
+    // save the device token with the user
+    thisModels.get('devices').push(token);
+    return thisModels.save();
   });
 }
 

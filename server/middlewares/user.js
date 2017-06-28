@@ -57,6 +57,12 @@ module.exports = {
     }).then(function(users){
       res.json(users);
     }).catch(next);
+  },
+  registerDevice: function (req, res, next) {
+    req.registeredUser.registerDevice(req.body.token, req.body.type)
+    then(function () {
+      res.status(204).send();
+    }).catch(next);
   }
 };
 

@@ -47,5 +47,21 @@ module.exports = {
       err = module.exports.parseMongoUniqueError(err);
     }
     res.status(err.status || 500).json(err);
+  },
+  registerDevice: function (token) {
+    return new Promise(function(resolve, reject){
+        pushClient.registerDevice({
+        push_token: token,
+        device_type: type,
+        hwid: sha1sum(token)
+      }, function(err, response) {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(response);
+        }
+      });
+  });
   }
 }
