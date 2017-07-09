@@ -9,6 +9,7 @@ var config = require('./config/config');
 var models = require('./models/index');
 var utils = require('./utils');
 var parseFile = require('./utils/tempFile');
+var graphModule = require('./utils/graphModule');
 
 var usersRoutes = require('./routes/users');
 var busesRoutes = require('./routes/buses');
@@ -46,5 +47,9 @@ app.use(utils.errorHandler);
 // parseFile.insertKsr();
 
 // parseFile.countStops();
+
+// parseFile.setDefaultStopsOrder();
+
+// graphModule.updateGraphWieghts();
 
 module.exports = app;

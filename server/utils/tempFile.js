@@ -89,6 +89,15 @@ module.exports = {
             });
         });
       });
+  },
+  setDefaultStopsOrder: function() {
+    models.stop.find({}, function (err, stops) {
+      if(err) return;
+      stops.forEach(function(stop, index){
+        stop.order = index;
+        stop.save();
+      });
+    });
   }
 }
 

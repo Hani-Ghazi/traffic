@@ -16,6 +16,7 @@
     "debug": "~2.6.3",
     "exceljs": "^0.4.10",
     "express": "~4.15.2",
+    "googlemaps": "^1.12.0",
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.17.2",

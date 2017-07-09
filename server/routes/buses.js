@@ -123,6 +123,7 @@ router.get('/', middleware.getBuses)
    * @apiUse AuthRequiredError
    */
   .get('/:busId/stops', middleware.getStopsByBusId)
+  .put('/:busId/stops', middleware.updateStops)
 
   /**
    * @api {get} /buses/bus_id Get Bus by ID

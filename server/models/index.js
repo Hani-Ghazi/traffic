@@ -9,7 +9,8 @@ var models = {
   user: require('./user'),
   bus: require('./bus'),
   stop: require('./stops'),
-  busStop: require('./busStop')
+  busStop: require('./busStop'),
+  graph: require('./graph')
 };
 
 var schemas = Object.keys(models).map(function (key) {

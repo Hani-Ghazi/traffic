@@ -2,6 +2,7 @@ const models = require('../models');
 const errors = require('../utils/errors');
 const constants = require('../utils/constansts');
 const utils = require('../utils');
+const Promise = require('bluebird');
 
 
 module.exports = {
@@ -38,18 +39,24 @@ module.exports = {
       res.json(stops);
     }).catch(next);
   },
-  getStopsByBusId: function(req, res, next){
+  getStopsByBusId: function (req, res, next) {
     models.busStop.find({bus: req.params.busId})
       .populate('stop', constants.stop.defautlFields)
       .then(function (stops) {
         res.json(stops);
       }).catch(next);
   },
-  getBusesByStopId:function (req, res, next) {
+  getBusesByStopId: function (req, res, next) {
     models.busStop.find({stopId: req.params.stopId})
       .populate('busId', constants.bus.defaultFields)
       .then(function (buses) {
         res.json(buses);
+      }).catch(next);
+  },
+  updateStops: function (req, res, next) {
+    models.stop.updateStops(req.body.stops, req.params.busId)
+      .then(function (stops) {
+        res.json(stops);
       }).catch(next);
   }
 }

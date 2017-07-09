@@ -6,5 +6,8 @@ module.exports = {
   jwt: {
     secret: 'iffMg@23',
     session: false
+  },
+  map: {
+    APIKEY: 'AIzaSyDwklslNKlkge2Mm3GR-vaA3orHYU6z4cY'
   }
 }
