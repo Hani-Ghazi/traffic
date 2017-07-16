@@ -1,0 +1,174 @@
+<style>
+  #right-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+  }
+
+  #right-panel select, #right-panel input {
+    font-size: 15px;
+  }
+
+  #right-panel select {
+    width: 100%;
+  }
+
+  #right-panel i {
+    font-size: 12px;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 100%;
+    float: left;
+    width: 63%;
+    height: 100%;
+  }
+  #right-panel {
+    float: right;
+    width: 34%;
+    height: 100%;
+  }
+  .panel {
+    height: 100%;
+    overflow: auto;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row no-gutter">
+      <div class="col-xs-12">
+        <div class="card">
+          <div class="card-heading">
+            <h2>Google Map</h2>
+            <small>Welcome to the bus direction</small>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12" ng-if="!dick">
+                <ng-map zoom="14" center="{{directions[0].origin.lat}}, {{directions[0].origin.lng}}">
+                  <directions ng-repeat="direction in directions"
+                              draggable="true"
+                              panel="directions-panel"
+                              travel-mode="DRIVING"
+                              origin="{{direction.origin.lat}}, {{direction.origin.lng}}"
+                              waypoints="{{direction.wayPoints}}"
+                              destination="{{direction.destination.lat}}, {{direction.destination.lng}}",
+                              suppress-markers="true"
+                              >
+                  </directions>
+                  <!--<directions ng-repeat="direction in directions"-->
+                              <!--draggable="true"-->
+                              <!--panel="directions-panel"-->
+                              <!--travel-mode="DRIVING"-->
+                              <!--origin="{{direction.origin.lat}}, {{direction.origin.lng}}"-->
+                              <!--destination="{{direction.destination.lat}}, {{direction.destination.lng}}">-->
+                  <!--</directions>-->
+                  <marker ng-repeat="stop in stops"
+                          position="{{stop.lat}}, {{stop.lng}}"
+                          draggable="true"
+                          on-dragend="justLog(this, {{stop}})"
+                          label="{{stop.arName}}"
+                          title="{{stop.arName}}"
+                  >
+                  <!--</marker>-->
+                </ng-map>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row no-gutter">
+      <div class="col-xs-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default table-responsive">
+                  <div class="panel-heading" ng-class="{'dir-rtl': app.setting.rtl}">
+                    <h2 translate="bus.listPage.title"></h2>
+                    <md-button ng-if="currentUser.permissions.buses.edit && !isEditing" class="md-raised md-primary"
+                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
+                               translate="bus.actions.edit" ng-click="startEdit()"></md-button>
+                    <md-button ng-if="currentUser.permissions.buses.edit && isEditing" class="md-raised md-primary"
+                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
+                               translate="bus.actions.save" ng-click="saveEdit()"></md-button>
+
+                    <md-button class="md-raised md-success"
+                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
+                               translate="Update Map" ng-click="initMap()"></md-button>
+                  </div>
+                  <table ng-table="stopsTable" class="table table-striped table-vmiddle table-hover table-condensed"
+                         ng-class="{'rtl': app.setting.rtl}"
+                         template-pagination="views/templates/ng-table-pager-template.html">
+                    <thead>
+                    <tr>
+                      <th translate="stop.name"></th>
+                      <th translate="stop.lat"></th>
+                      <th translate="stop.lng"></th>
+                      <th translate="stop.order"></th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in $data" ng-if="$data.length">
+                      <td ng-switch="isEditing"><span ng-switch-default>{{row.arName}}</span>
+                        <div ng-switch-when="true">
+                          <input type="text" class="md-input" ng-model="row.arName">
+                        </div>
+                      </td>
+                      <td ng-switch="isEditing"><span ng-switch-default>{{row.lat}}</span>
+                        <div class="controls" ng-switch-when="true">
+                          <input type="number" class="md-input" ng-model="row.lat">
+                        </div>
+                      </td>
+                      <td ng-switch="isEditing"><span ng-switch-default>{{row.lng}}</span>
+                        <div class="controls" ng-switch-when="true">
+                          <input type="number" class="md-input" ng-model="row.lng">
+                        </div>
+                      </td>
+                      <td ng-switch="isEditing"><span ng-switch-default>{{row.order}}</span>
+                        <div class="controls" ng-switch-when="true">
+                          <input type="number" class="md-input" ng-model="row.order">
+                        </div>
+                      </td>
+                      <!--<td>-->
+                      <!--<md-button ng-if="currentUser.permissions.buses.edit" class="md-raised md-primary"-->
+                      <!--ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"-->
+                      <!--translate="bus.actions.new" ng-click="startEdit(row)"></md-button>-->
+                      <!--</td>-->
+                    </tr>
+                    <tr ng-if="!$data.length && !isLoading && !isError">
+                      <td class="no-data-cell" colspan="5" translate="user.listPage.noData"></td>
+                    </tr>
+                    <tr ng-if="isLoading">
+                      <td class="no-data-cell" colspan="5" translate="global.loadingData"></td>
+                    </tr>
+                    <tr ng-if="isError">
+                      <td class="no-data-cell" colspan="5" translate="global.errorData"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

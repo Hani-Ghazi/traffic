@@ -26,11 +26,11 @@ angular.module('trafficCMS.buses', [])
         child: true
       },
       resolve: {
-        user: function($rootScope, $q, $state, $stateParams, authorization, models) {
+        bus: function($rootScope, $q, $state, $stateParams, authorization, models) {
           return authorization.authorize().then(function() {
             var deferred = $q.defer();
             if (angular.isDefined($stateParams.bus) && $stateParams.bus !== null) {
-              deferred.resolve($stateParams.bus.clone ? $stateParams.user.clone() : angular.copy($stateParams.user));
+              deferred.resolve($stateParams.bus.clone ? $stateParams.bus.clone() : angular.copy($stateParams.bus));
             }
             else if (angular.isUndefined($stateParams.busId) || $stateParams.busId === '' || $stateParams.busId === null) {
               $state.go('app.buses', {}, {
@@ -48,6 +48,20 @@ angular.module('trafficCMS.buses', [])
             }
             return deferred.promise;
           });
+        },
+        // stops: function ($q, $stateParams, models) {
+        //   var deferred = $q.defer();
+        //   if(angular.isUndefined($stateParams.busId) || $stateParams.busId === '' || $stateParams.busId === null)
+        //     deferred.reject();
+        //   else {
+        //     models.bus.getStopsByBusId($stateParams.busId).then(function (stops) {
+        //       deferred.resolve(stops)
+        //     }, deferred.reject);
+        //   }
+        //   return deferred.promies;
+        // },
+        googleApi: function () {
+          return loadGoogleMaps();
         }
       }
     });

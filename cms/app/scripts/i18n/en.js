@@ -127,10 +127,30 @@ angular.module('trafficCMS.i18n')
     'changePassword.success': 'Password changed successfully',
     'save.success': 'User saved successfully'
   },
-  buses: {
+  bus: {
     listPage: {
-      title: 'Buses'
-    }
+      title: 'Buses List'
+    },
+    actions: {
+      new: 'New Bus',
+      edit: 'Edit'
+    },
+    name: 'Bus Name',
+    stopsNumber: 'Stops number',
+    length: 'Length',
+  },
+  stop: {
+    listPage: {
+      title: 'Stops List'
+    },
+    actions: {
+      edit: 'Edit the list',
+      new: 'New'
+    },
+    name: 'Stop Name',
+    lat: 'Lat',
+    lng: 'Lng',
+    order: 'Order'
   },
   map: {
     name: 'Title',

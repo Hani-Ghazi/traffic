@@ -1,4 +1,3 @@
-'use strict';
 
 angular.module('trafficCMS.login', [])
 .config(function($httpProvider, $stateProvider) {

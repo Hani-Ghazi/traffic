@@ -14,9 +14,12 @@ angular.module('trafficCMS', [
   'ngMessages',
   'ngSanitize',
   'ngMaterial',
+  'ngMap',
   'ngStorage',
   'ui.router',
   'ui.utils',
+  'uiGmapgoogle-maps',
+  'ui.map',
   'ui.bootstrap',
   'pascalprecht.translate',
   'restangular',
@@ -31,7 +34,8 @@ angular.module('trafficCMS', [
   'trafficCMS.basic',
   'trafficCMS.users',
   'trafficCMS.buses'
-]).constant('_', _).config(function($stateProvider, $urlRouterProvider, $localStorageProvider, $mdDateLocaleProvider) {
+]).constant('_', _)
+  .config(function($stateProvider, $urlRouterProvider, $localStorageProvider, $mdDateLocaleProvider) {
   $localStorageProvider.setKeyPrefix('trafficCMS');
   $urlRouterProvider.otherwise('/app/users');
   $stateProvider.state('app', {
