@@ -133,7 +133,9 @@ angular.module('trafficCMS.i18n')
     },
     actions: {
       new: 'New Bus',
-      edit: 'Edit'
+      edit: 'Edit',
+      save: 'Save',
+      addStop: 'Add New Stop'
     },
     name: 'Bus Name',
     stopsNumber: 'Stops number',
