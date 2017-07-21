@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 
 module.exports = {
   getBuses: function (req, res, next) {
+    console.log(global.h3h3++);
     var limit = Number(req.query.limit);
     limit = isNaN(limit) ? 10 : limit;
     var offset = Number(req.query.offset);
@@ -20,6 +21,7 @@ module.exports = {
     }).catch(next);
   },
   getBusById: function (req, res, next) {
+    console.log(global.h3h3++);
     models.bus.getBusById(req.params.busId)
       .then(function (bus) {
         console.log(bus);
@@ -27,6 +29,7 @@ module.exports = {
       }).catch(next);
   },
   getStops: function (req, res, next) {
+    console.log(global.h3h3++);
     var limit = Number(req.query.limit);
     limit = isNaN(limit) ? 10 : limit;
     var offset = Number(req.query.skip);
@@ -40,6 +43,7 @@ module.exports = {
     }).catch(next);
   },
   getStopsByBusId: function (req, res, next) {
+    console.log(global.h3h3++);
     models.busStop.find({bus: req.params.busId})
       .populate('stop', constants.stop.defautlFields)
       .then(function (stops) {
@@ -47,6 +51,7 @@ module.exports = {
       }).catch(next);
   },
   getBusesByStopId: function (req, res, next) {
+    console.log(global.h3h3++);
     models.busStop.find({stopId: req.params.stopId})
       .populate('busId', constants.bus.defaultFields)
       .then(function (buses) {
@@ -54,14 +59,16 @@ module.exports = {
       }).catch(next);
   },
   updateStops: function (req, res, next) {
+    console.log(global.h3h3++);
     models.stop.updateStops(req.body.stops, req.params.busId)
       .then(function (stops) {
         res.json(stops);
       }).catch(next);
   },
   removeStopByIdFromBusList: function (req, res, next) {
+    console.log(global.h3h3++);
     var thisModels = models;
-    thisModels.busStop.remove({stop: req.params.stopId, bus: req.params.busId})
+    thisModels.busStop.remove({stop: mongoose.Types.ObjectId(req.params.stopId), bus: mongoose.Types.ObjectId(req.params.busId)})
       .then(function () {
         thisModels.bus.update({_id: mongoose.Types.ObjectId(req.params.busId)}, {$inc: {stopsCount: -1}})
           .then(function (bus) {

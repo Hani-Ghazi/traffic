@@ -50,6 +50,7 @@ stopsSchema.statics.updateStops = function (stops, busId) {
         lng: stop.lng,
         arName: stop.arName
       }));
+      promises.push(thisBusStopModel.update({bus: mongoose.Types.ObjectId(busId), stop: mongoose.Types.ObjectId(stop.id)}, {order: stop.order}));
     }
   });
   return Promise.all(promises).then(function () {

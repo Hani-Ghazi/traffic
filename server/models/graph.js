@@ -18,10 +18,14 @@ var graphSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  duration: {
+    type: Number,
+    required: true
+  },
   type: {
     type: String,
     default: 'WALKING',
-    enum: ['WALKING', 'DRIVEING']
+    enum: ['WALKING', 'DRIVING']
   },
   isDriect: {
     type: Boolean

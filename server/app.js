@@ -16,6 +16,8 @@ var busesRoutes = require('./routes/buses');
 var stopsRoutes = require('./routes/stops');
 var app = express();
 
+global.h3h3 = 0;
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -50,8 +52,8 @@ app.use(utils.errorHandler);
 
 // parseFile.countStops();
 
-parseFile.setDefaultStopsOrder();
+// parseFile.setDefaultStopsOrder();
 
-// graphModule.updateGraphWieghts();
+// graphModule.initGraph();
 
 module.exports = app;

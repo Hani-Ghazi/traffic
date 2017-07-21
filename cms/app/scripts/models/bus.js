@@ -12,6 +12,10 @@ angular.module('trafficCMS.models')
     Bus.updateStops = function (busId, stops) {
       return Restangular.one(route).one(busId).one('stops').customPUT({stops: stops});
     };
+
+    Bus.removeStop = function(busId, stopId){
+      return Restangular.one(route + '/stops').one(busId).one(stopId).remove();
+    }
     
     return Bus;
   });

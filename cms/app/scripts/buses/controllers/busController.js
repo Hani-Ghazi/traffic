@@ -1,14 +1,12 @@
 'use strict';
 
 angular.module('trafficCMS.buses')
-  .controller('BusCtrl', function ($scope, $timeout, $mdDialog, bus, models, NgMap, NgTableParams) {
+  .controller('BusCtrl', function ($scope, $timeout, $mdDialog, bus, models, NgMap, NgTableParams, Restangular) {
     $scope.isLoading = false;
     $scope.isEditing = false;
     $scope.bus = bus;
     $scope.newStop = undefined;
-    models.stop.getAllStops().then(function(stops){
-      $scope.allStops = stops;
-    });
+
 
     var sortStops = function(){
       $scope.stops.sort(function (a, b) {
@@ -42,9 +40,15 @@ angular.module('trafficCMS.buses')
     };
 
     models.bus.getStopsByBusId($scope.bus.id).then(function (stops) {
+      stops = Restangular.stripRestangular(stops);
       $scope.stops = stops.map(function (row) {
         row.stop.order = row.order;
         return row.stop;
+      });
+
+      models.stop.getAllStops().then(function(allStops){
+        allStops = Restangular.stripRestangular(allStops);
+        $scope.allStops = _.differenceBy(allStops, $scope.stops, 'id');
       });
 
       $scope.initMap();
@@ -76,17 +80,20 @@ angular.module('trafficCMS.buses')
       $scope.stopsTable.reload();
     };
 
-    $scope.removeStop = function (index) {
+    $scope.removeStop = function (stop_remove) {
       var confirm = $mdDialog.confirm()
         .title('Are you sure')
-        .textContent('Are you sure to delete the stop:' + $scope.stops[index].arName + ' ?')
+        .textContent('Are you sure to delete the stop:' + stop_remove.arName + ' ?')
         .ok('Delete it!')
         .cancel('Cancel');
 
       $mdDialog.show(confirm).then(function () {
-        models.stop.remove($scope.bus.id, $scope.stops[index].id)
+        models.bus.removeStop($scope.bus.id, stop_remove.id)
           .then(function () {
-            $scope.stops.splice(index, index + 1);
+            $scope.stops = _.filter($scope.stops, function (stop) {
+              return stop.id != stop_remove.id;
+            })
+            // $scope.stops.splice(index, index + 1);
             $scope.stopsTable.reload();
           });
       });
