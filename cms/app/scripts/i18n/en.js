@@ -16,6 +16,11 @@ angular.module('trafficCMS.i18n')
       selectImage: 'Choose..',
       changeImage: 'Change',
       removeImage: 'Remove'
+    },
+    field: {
+      error: {
+        required: 'This field is required!'
+      }
     }
   },
   aside: {
@@ -30,7 +35,7 @@ angular.module('trafficCMS.i18n')
       maps: 'Maps',
       users: 'Users',
       buses: 'Buses',
-      categories: 'Categories'
+      stops: 'Stops'
     }
   },
   login: {
@@ -135,7 +140,8 @@ angular.module('trafficCMS.i18n')
       new: 'New Bus',
       edit: 'Edit',
       save: 'Save',
-      addStop: 'Add New Stop'
+      addStop: 'Add New Stop',
+      addExistStop: 'Add Exist Stop'
     },
     name: 'Bus Name',
     stopsNumber: 'Stops number',
@@ -148,6 +154,9 @@ angular.module('trafficCMS.i18n')
     actions: {
       edit: 'Edit the list',
       new: 'New'
+    },
+    editInfo: {
+      titel: 'Stop Info'
     },
     name: 'Stop Name',
     lat: 'Lat',

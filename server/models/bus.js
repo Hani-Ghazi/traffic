@@ -4,9 +4,7 @@ const errors = require('../utils/errors');
 
 var busSchema = new mongoose.Schema({
   busId: {
-    type: Number,
-    unique: true,
-    required: true,
+    type: Number
   },
   arName: {
     type: String,
@@ -38,6 +36,12 @@ busSchema.statics.getBusById = function (busId) {
       delete bus.busId;
       return bus;
     });
+};
+
+busSchema.statics.updateStopsCount = function (busId, count) {
+  var id = mongoose.Types.ObjectId(busId);
+  var  thisModel = this;
+  return thisModel.update({_id: id}, {stopsCount: count});
 };
 
 module.exports = mongoose.model('bus', busSchema, 'bus');

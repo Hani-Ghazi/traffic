@@ -49,17 +49,6 @@ angular.module('trafficCMS.buses', [])
             return deferred.promise;
           });
         },
-        // stops: function ($q, $stateParams, models) {
-        //   var deferred = $q.defer();
-        //   if(angular.isUndefined($stateParams.busId) || $stateParams.busId === '' || $stateParams.busId === null)
-        //     deferred.reject();
-        //   else {
-        //     models.bus.getStopsByBusId($stateParams.busId).then(function (stops) {
-        //       deferred.resolve(stops)
-        //     }, deferred.reject);
-        //   }
-        //   return deferred.promies;
-        // },
         googleApi: function () {
           return loadGoogleMaps();
         }

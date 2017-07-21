@@ -183,5 +183,9 @@ router.get('/', middleware.getBuses)
    *
    * @apiUse AuthRequiredError
    */
+
   .get('/stops/:stopId', middleware.getBusesByStopId)
+
+  .delete('/stops/:busId/:stopId', middleware.removeStopByIdFromBusList);
+
 module.exports = router;

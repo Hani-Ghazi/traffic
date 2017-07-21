@@ -4,14 +4,18 @@
       <div class="col-xs-12">
         <div class="card">
           <div class="card-heading">
-            <div class="col-md-10">
+            <div class="col-md-8">
               <h2>Google Map</h2>
               <small>Welcome to the bus direction</small>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
               <md-button ng-if="currentUser.permissions.buses.edit && !isEditing" class="md-raised md-primary"
                          ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
                          translate="bus.actions.edit" ng-click="startEdit()"></md-button>
+
+              <md-button class="md-raised"
+                         ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
+                         translate="Update Map" ng-click="initMap()"></md-button>
             </div>
           </div>
           <div class="card-body">
@@ -29,19 +33,13 @@
                               suppress-markers="true"
                   >
                   </directions>
-                  <!--<directions ng-repeat="direction in directions"-->
-                  <!--draggable="true"-->
-                  <!--panel="directions-panel"-->
-                  <!--travel-mode="DRIVING"-->
-                  <!--origin="{{direction.origin.lat}}, {{direction.origin.lng}}"-->
-                  <!--destination="{{direction.destination.lat}}, {{direction.destination.lng}}">-->
-                  <!--</directions>-->
                   <marker ng-repeat="stop in stops"
                           position="{{stop.lat}}, {{stop.lng}}"
                           draggable="true"
                           on-dragend="justLog(this, {{stop}})"
                           label="{{stop.arName}}"
                           title="{{stop.arName}}"
+                          icon="{{stop.new? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png': ''}}"
                   >
                   </marker>
                 </ng-map>
@@ -68,14 +66,13 @@
                     <md-button ng-if="currentUser.permissions.buses.edit && isEditing" class="md-raised md-primary"
                                ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
                                translate="bus.actions.save" ng-click="saveEdit()"></md-button>
+                    <md-select ng-model="newStop" class="md-default-theme col-md-4" ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}">
+                      <md-option ng-repeat="stop in allStops" ng-value="stop"> {{stop.arName}} </md-option>
+                    </md-select>
+                    <md-button ng-if="currentUser.permissions.buses.edit && isEditing" class="md-raised md-default"
+                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}" ng-disabled="!newStop"
+                               translate="bus.actions.addStop" ng-click="addStop(newStop)"></md-button>
 
-                    <md-button ng-if="currentUser.permissions.buses.edit && isEditing" class="md-raised md-success"
-                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
-                               translate="bus.actions.addStop" ng-click="addStop()"></md-button>
-
-                    <md-button class="md-raised"
-                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
-                               translate="Update Map" ng-click="initMap()"></md-button>
                   </div>
                   <table ng-table="stopsTable" class="table table-striped table-vmiddle table-hover table-condensed"
                          ng-class="{'rtl': app.setting.rtl}"
@@ -111,11 +108,10 @@
                           <input type="number" class="md-input" ng-model="row.order">
                         </div>
                       </td>
-                      <!--<td>-->
-                      <!--<md-button ng-if="currentUser.permissions.buses.edit" class="md-raised md-primary"-->
-                      <!--ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"-->
-                      <!--translate="bus.actions.new" ng-click="startEdit(row)"></md-button>-->
-                      <!--</td>-->
+                      <td>
+                        <md-button type="button" class="md-raised red-500" ng-click="removeStop($index)"><i
+                          class="mdi mdi-content-block"></i></md-button>
+                      </td>
                     </tr>
                     <tr ng-if="!$data.length && !isLoading && !isError">
                       <td class="no-data-cell" colspan="5" translate="user.listPage.noData"></td>

@@ -91,10 +91,11 @@ module.exports = {
       });
   },
   setDefaultStopsOrder: function() {
-    models.stop.find({}, function (err, stops) {
+    var index = 1;
+    models.busStop.find({}, function (err, stops) {
       if(err) return;
-      stops.forEach(function(stop, index){
-        stop.order = index;
+      stops.forEach(function(stop){
+        stop.order = index++;
         stop.save();
       });
     });

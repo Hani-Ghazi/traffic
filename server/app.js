@@ -13,6 +13,7 @@ var graphModule = require('./utils/graphModule');
 
 var usersRoutes = require('./routes/users');
 var busesRoutes = require('./routes/buses');
+var stopsRoutes = require('./routes/stops');
 var app = express();
 
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRoutes);
 app.use('/buses', busesRoutes);
+app.use('/stops', stopsRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,7 +50,7 @@ app.use(utils.errorHandler);
 
 // parseFile.countStops();
 
-// parseFile.setDefaultStopsOrder();
+parseFile.setDefaultStopsOrder();
 
 // graphModule.updateGraphWieghts();
 

@@ -3,7 +3,7 @@ const errors = require('../utils/errors');
 const constants = require('../utils/constansts');
 const utils = require('../utils');
 const Promise = require('bluebird');
-
+const mongoose = require('mongoose');
 
 module.exports = {
   getBuses: function (req, res, next) {
@@ -58,5 +58,15 @@ module.exports = {
       .then(function (stops) {
         res.json(stops);
       }).catch(next);
+  },
+  removeStopByIdFromBusList: function (req, res, next) {
+    var thisModels = models;
+    thisModels.busStop.remove({stop: req.params.stopId, bus: req.params.busId})
+      .then(function () {
+        thisModels.bus.update({_id: mongoose.Types.ObjectId(req.params.busId)}, {$inc: {stopsCount: -1}})
+          .then(function (bus) {
+            res.json(bus);
+          });
+    }).catch(next);
   }
 }

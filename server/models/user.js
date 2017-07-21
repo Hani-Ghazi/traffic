@@ -140,7 +140,8 @@ userSchema.statics.createAdmin = function () {
         firstName: 'Admin',
         lastName: 'Admin',
         role: 'admin',
-        phone: '123456789'
+        phone: '123456789',
+        isActive: true
       });
     }
     return Promise.resolve();

@@ -20,6 +20,11 @@ angular.module('trafficCMS.login')
           list: true,
           view: true,
           edit: isAdmin
+        },
+        stops: {
+          list: true,
+          view: true,
+          edit: isAdmin
         }
       }
     };
