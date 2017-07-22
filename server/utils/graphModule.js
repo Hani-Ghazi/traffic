@@ -179,5 +179,17 @@ module.exports = {
         });
         file.end();
       });
+  },
+  testJar: function () {
+    var exec = require('child_process').exec, child;
+    var path1 = path.resolve(__dirname, '../graphFiles/graph-2.3.0');
+    child = exec('java -jar ' + path1 ,
+      function (error, stdout, stderr){
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if(error !== null){
+          console.log('exec error: ' + error);
+        }
+      });
   }
 }

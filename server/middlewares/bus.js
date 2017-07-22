@@ -44,7 +44,7 @@ module.exports = {
   },
   getStopsByBusId: function (req, res, next) {
     console.log(global.h3h3++);
-    models.busStop.find({bus: req.params.busId})
+    models.busStop.find({bus: mongoose.Types.ObjectId(req.params.busId)})
       .populate('stop', constants.stop.defautlFields)
       .then(function (stops) {
         res.json(stops);

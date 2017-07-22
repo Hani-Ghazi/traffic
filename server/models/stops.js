@@ -37,8 +37,8 @@ stopsSchema.statics.updateStops = function (stops, busId) {
   stops.forEach(function (stop) {
     if (stop.new) {
       promises.push(thisBusStopModel.create({
-          bus: busId,
-          stop: stop.id,
+          bus: mongoose.Types.ObjectId(busId),
+          stop: mongoose.Types.ObjectId(stop.id),
           order: stop.order
         })
       );

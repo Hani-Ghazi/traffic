@@ -8,7 +8,7 @@ angular.module('trafficCMS.buses')
     $scope.newStop = undefined;
 
 
-    var sortStops = function(){
+    var sortStops = function () {
       $scope.stops.sort(function (a, b) {
         return a.order - b.order;
       });
@@ -34,9 +34,10 @@ angular.module('trafficCMS.buses')
         }
       });
 
-      $scope.directions[$scope.directions.length - 1].destination = $scope.stops[$scope.stops.length - 1];
-      $scope.directions[$scope.directions.length - 1].wayPoints = wayPoints;
-
+      if ($scope.stops.length > 1) {
+        $scope.directions[$scope.directions.length - 1].destination = $scope.stops[$scope.stops.length - 1];
+        $scope.directions[$scope.directions.length - 1].wayPoints = wayPoints;
+      }
     };
 
     models.bus.getStopsByBusId($scope.bus.id).then(function (stops) {
@@ -46,7 +47,7 @@ angular.module('trafficCMS.buses')
         return row.stop;
       });
 
-      models.stop.getAllStops().then(function(allStops){
+      models.stop.getAllStops().then(function (allStops) {
         allStops = Restangular.stripRestangular(allStops);
         $scope.allStops = _.differenceBy(allStops, $scope.stops, 'id');
       });
@@ -72,8 +73,8 @@ angular.module('trafficCMS.buses')
     });
 
     $scope.addStop = function (newStop) {
-      if(angular.isUndefined(newStop))
-        return ;
+      if (angular.isUndefined(newStop))
+        return;
       newStop.new = true;
       $scope.stops.push(newStop);
       sortStops();

@@ -57,4 +57,6 @@ app.use(utils.errorHandler);
 
 // graphModule.initGraph();
 
+// graphModule.testJar();
+
 module.exports = app;
