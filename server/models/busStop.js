@@ -3,9 +3,7 @@ const constants = require('../utils/constansts')
 
 var busStopSchema = new mongoose.Schema({
   bus: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'bus'
+
   },
   stop: {
     type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +20,7 @@ busStopSchema.statics.AllStopByBusId = function (busId) {
   var thisModel = this;
   if(!busId || busId == '')
     return Promise.reject();
-  return thisModel.find({bus: busId})
+  return thisModel.find({bus: mongoose.Types.ObjectId(busId)})
     .populate('stop', constants.stop.defautlFields)
     .then(function (stops) {
       return stops;

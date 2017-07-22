@@ -75,5 +75,25 @@ module.exports = {
             res.json(bus);
           });
     }).catch(next);
+  },
+  removeBusById :  function (req, res, next) {
+    var busId = mongoose.Types.ObjectId(req.params.busId);
+    models.bus.remove({_id: busId})
+      .then(function () {
+        models.busStop.remove({bus: busId}).then(function () {
+          res.json();
+        })
+      }).catch(next);
+  },
+  createBus: function (req, res, next) {
+    models.bus.create({
+      arName: req.body.arName,
+      enName: ' ',
+      length: 0,
+      busId: new Date().getTime(),
+      stopsCount: 0
+    }).then(function () {
+      res.json();
+    }).catch(next);
   }
 }

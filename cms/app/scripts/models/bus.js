@@ -15,7 +15,15 @@ angular.module('trafficCMS.models')
 
     Bus.removeStop = function(busId, stopId){
       return Restangular.one(route + '/stops').one(busId).one(stopId).remove();
-    }
-    
+    };
+
+    Bus.removeBus = function (busId) {
+      return Restangular.one(route).one(busId).remove();
+    };
+
+    Bus.new = function (arName) {
+      return Restangular.one(route).customPOST({arName: arName});
+    };
+
     return Bus;
   });

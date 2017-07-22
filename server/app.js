@@ -14,9 +14,9 @@ var graphModule = require('./utils/graphModule');
 var usersRoutes = require('./routes/users');
 var busesRoutes = require('./routes/buses');
 var stopsRoutes = require('./routes/stops');
+var directionRoutes = require('./routes/directios');
 var app = express();
 
-global.h3h3 = 0;
 
 
 // uncomment after placing your favicon in /public
@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', usersRoutes);
 app.use('/buses', busesRoutes);
 app.use('/stops', stopsRoutes);
+app.use('/direction', directionRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

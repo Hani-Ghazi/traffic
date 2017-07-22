@@ -36,6 +36,7 @@ router.use(userMiddleware.checkLogin);
  * @apiUse AuthRequiredError
  */
 router.get('/', middleware.getBuses)
+  .post('/', middleware.createBus)
 
 /**
  * @api {get} /buses/stops Get list of all Stops
@@ -144,6 +145,7 @@ router.get('/', middleware.getBuses)
    * @apiUse AuthRequiredError
    */
   .get('/:busId', middleware.getBusById)
+  .delete('/:busId', middleware.removeBusById)
 
   /**
    * @api {get} /buses/stops/stop_id Get list of all buses that's across in specific bus stop
