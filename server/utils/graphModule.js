@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 var config = require('../config/config');
 const constants = require('../utils/constansts');
 var GoogleMapsApi = require('googlemaps');
+var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 
@@ -24,22 +25,34 @@ function getDistance(origin, destination, edge, mode) {
   var params = {
     origins: origin.lat + ',' + origin.lng,
     destinations: destination.lat + ',' + destination.lng,
-    travelMode: mode || 'WALKING'
+    travelMode: mode || 'DRIVING'
   };
+  // console.log(params);
   gmAPI.distance(params, function (err, result) {
     if (err) {
       console.log("error", err);
       return;
     }
     console.log("result", result);
-    if (edge) {
-      edge.distance = result.rows[0].elements[0].distance.value;
-      edge.duration = result.rows[0].elements[0].duration.value;
-      edge.save(function (err) {
-        if (err)
-          console.log(err);
-      });
-    }
+    // if (edge && result.status == 'OK') {
+    //   edge.distance = result.rows[0].elements[0].distance.value;
+    //   edge.duration = result.rows[0].elements[0].duration.value;
+    //   if (edge.duration) {
+    //     edge.save(function (err) {
+    //       if (err)
+    //         console.log(err);
+    //     });
+    //   }
+    //   if (mode == "WALKING") { // reverse the edge
+    //     models.graph.create({
+    //       origin: edge.destination,
+    //       destination: edge.origin,
+    //       distance: edge.distance,
+    //       duration: edge.duration,
+    //       type: "WALKING"
+    //     })
+    //   }
+    // }
   });
 }
 
@@ -62,83 +75,99 @@ function checkWalkingDistance(origin, destination) {
 }
 
 var res = [];
+var countWalkingEdges = 0;
 
 function findEdge(origin, destination) {
   return models.graph.findOne({
     origin: origin.id,
     destination: destination.id
-  }).then(function (edge) {
-    if (!edge) { // if this edge not exist before
-      var edge = new models.graph({
-        origin: origin.id,
-        destination: destination.id,
-        type: 'DRIVING'
+  }).then(function (existEdge) {
+    if (!existEdge) { // if this edge not exist before
+      res.push({
+        origin: origin,
+        destination: destination,
+        type: "WALKING",
+        edge: new models.graph({
+          origin: origin.id,
+          destination: destination.id,
+          type: 'WALKING'
+        })
       });
-      res.push({edge: edge, origin: origin, destination: destination});
+      countWalkingEdges++;
     }
   });
 }
 
 function drivingEdges() {
   var promises = [];
+  var edgeCount = 0;
   models.bus.find({}) // get all buses
     .then(function (buses) {
       buses.forEach(function (bus) {
-        return models.busStop.AllStopByBusId(bus.id) // get related stops
+        promises.push(models.busStop.AllStopByBusId(bus.id) // get related stops
           .then(function (stops) {
             for (var i = 1; i < stops.length; i++) { // make edge between every 2 stop
-              promises.push(findEdge(stops[i - 1].stop, stops[i].stop));
+              res.push({
+                origin: stops[i - 1].stop,
+                destination: stops[i].stop,
+                type: "DRIVING",
+                edge: new models.graph({
+                  origin: stops[i - 1].stop.id,
+                  destination: stops[i].stop.id,
+                  type: 'DRIVING'
+                })
+              });
+              edgeCount++
+              console.log('origin: ' + stops[i - 1].stop.arName + ', order: ' + stops[i - 1].order);
+              console.log('destination: ' + stops[i].stop.arName + ', order: ' + stops[i].order);
             }
-            Promise.all(promises).then(function () {
-              var index = 0;
-              var size = res.length;
-              var timer = setInterval(function () {
-                if (index == size)
-                  clearInterval(timer);
-                else {
-                  getDistance(res[index].origin, res[index].destination, res[index].edge, 'DRIVING');
-                  index++;
-                }
-              }, 500);
-            }).catch(function (err) {
-              console.log("err", err);
-            })
-          });
+            console.log("---------------------------------------");
+            return Promise.resolve();
+          })
+        );
+        Promise.all(promises).then(function () {
+          setTimeout(function () {
+            var index = 0;
+            var size = res.length;
+            var timer = setInterval(function () {
+              if (index == size)
+                clearInterval(timer);
+              else {
+                // console.log("res", res);
+                getDistance(res[index].origin, res[index].destination, res[index].edge, 'DRIVING');
+                index++;
+              }
+            }, 1000);
+          }, 2000);
+        })
       });
     });
 }
 
 function walkingEdges() {
-  var count = 0, total = 0, res = [];
+  var count = 0, total = 0;
   models.stop.find({})
     .then(function (stops) {
       for (var i = 0; i < stops.length - 1; i++) {
         for (var j = i + 1; j < stops.length; j++) {
           if (checkWalkingDistance(stops[i], stops[j])) {
-            var edge = new models.graph({
-              origin: stops[i - 1],
-              destination: stops[i],
-              type: 'WALKING'
-            });
-            res.push(edge);
-            count++;
+            findEdge(stops[i], stops[j]);
           }
           total++;
         }
       }
-      var index = 0;
-      var size = res.length;
-      var timer = setInterval(function () {
-        if (index == size)
-          clearInterval(timer);
-        else {
-
-          getDistance(res[index].origin, res[index].destination, res[index], 'WALKING');
-          index++;
-        }
-      }, 30);
-      console.log("count", count);
-      console.log("total", total);
+      setTimeout(function () {
+        var index = 0;
+        var size = res.length;
+        var timer = setInterval(function () {
+          if (index == size)
+            clearInterval(timer);
+          else {
+            getDistance(res[index].origin, res[index].destination, res[index].edge, 'WALKING');
+            index++;
+          }
+        }, 1000);
+      }, 20000);
     });
 }
 
@@ -147,18 +176,13 @@ module.exports = {
   updateGraphWieghts: function () {
     if (!gmAPI)
       initMap();
-    // var temp = new models.graph({
-    //   origin: '59722bcdbc64f129aceec311',
-    //   destination: '59722bcdbc64f129aceec30f',
-    //   type: 'DRIVING'
-    // });
-    // getDistance({lat: 33.524291, lng: 36.293417}, {lat: 33.529933, lng: 36.293813}, temp);
   },
   initGraph: function () {
     if (!gmAPI)
       initMap();
-    drivingEdges();
+    // drivingEdges();
     // walkingEdges();
+    getDistance({lat: 33.531589, lng: 36.316468}, {lat: 33.5254853879807, lng: 36.3056749825562}, null, "DRIVING");
   },
   writeGraphFile: function () {
     var arr = [];
@@ -175,21 +199,58 @@ module.exports = {
         });
         file.write(arr.length + '\n');
         arr.forEach(function (edge) {
-          file.write(edge.origin + ' ' + edge.destination + ' ' + edge.duration + '\n');
+          if(edge.duration) {
+            if(edge.type == "WALKING")
+              edge.duration += 600;
+            file.write(edge.origin + ' ' + edge.destination + ' ' + edge.duration + '\n');
+          }
         });
+        console.log('end writing !!');
         file.end();
       });
   },
-  testJar: function () {
+  testJar: function (originId, destId) {
     var exec = require('child_process').exec, child;
-    var path1 = path.resolve(__dirname, '../graphFiles/graph-2.3.0');
-    child = exec('java -jar ' + path1 ,
-      function (error, stdout, stderr){
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if(error !== null){
-          console.log('exec error: ' + error);
-        }
-      });
+    var path1 = path.resolve(__dirname, '../graphFiles');
+    var result = [];
+    var pathNo = -1;
+    return new Promise(function (resolve, reject) {
+      child = exec('java -jar ' + path1 + '/graph-2.3.0.jar ' + path1 + '/test ' + originId + ' ' + destId,
+        function (error, stdout, stderr) {
+          console.log('stdout: ' + stdout);
+          var lines = stdout.split('\n');
+          _.forEach(lines, function (line) {
+            if(line[0] == '['){
+              var temp = line.split(':');
+              result.push({total: temp[1], stops: []});
+              return;
+            }
+            if(line.indexOf('Path') != -1 || line == "" ) {
+              pathNo++;
+              return;
+            }
+            var segments = line.split(' ');
+            result[pathNo].stops.push(segments[0]);
+            if(result.length == 3){
+              return result;
+            }
+          });
+          if (error !== null) {
+            console.log('exec error: ' + error);
+          }
+        });
+      setTimeout(function () {
+        return resolve(result);
+      }, 500)
+    });
+
+    // return models.busStop.find({bus: mongoose.Types.ObjectId('597337ed43583552f3491bf1')})
+    //   .sort('order')
+    //   .then(function (stops) {
+    //     var s = stops[0].stop.toHexString(), d = stops[stops.length - 1].stop.toHexString();
+    //     console.log('origin: ', s);
+    //     console.log('destination: ', d);
+    //
+    //   });
   }
 }

@@ -8,6 +8,10 @@ module.exports = {
     session: false
   },
   map: {
-    APIKEY: 'AIzaSyDwklslNKlkge2Mm3GR-vaA3orHYU6z4cY'
+    // APIKEY: 'AIzaSyDwklslNKlkge2Mm3GR-vaA3orHYU6z4cY'
+    APIKEY: 'AIzaSyDhB2BrqCPXQMmpzMOoKx2KU37MybQixtg'
+    //APIKEY: 'AIzaSyDS2UxULw1kCsEKSWRASAisXAPoSl6ZsfM'
+    // APIKEY: 'AIzaSyCoWp1D96F9yYGF1kxIcI2_59hw7UFCNKo'
+    // APIKEY: 'AIzaSyAtvBiaCtEpJ6sWoZG18svEHQKCfuLlL1I'
   }
 }

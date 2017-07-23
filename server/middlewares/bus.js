@@ -66,9 +66,8 @@ module.exports = {
       }).catch(next);
   },
   removeStopByIdFromBusList: function (req, res, next) {
-    console.log(global.h3h3++);
     var thisModels = models;
-    thisModels.busStop.remove({stop: mongoose.Types.ObjectId(req.params.stopId), bus: mongoose.Types.ObjectId(req.params.busId)})
+    thisModels.busStop.remove({_id: mongoose.Types.ObjectId(req.params.stopId)})
       .then(function () {
         thisModels.bus.update({_id: mongoose.Types.ObjectId(req.params.busId)}, {$inc: {stopsCount: -1}})
           .then(function (bus) {

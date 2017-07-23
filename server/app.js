@@ -57,6 +57,13 @@ app.use(utils.errorHandler);
 
 // graphModule.initGraph();
 
-// graphModule.testJar();
+
+// graphModule.writeGraphFile();
+
+// graphModule.testJar().then(function (result) {
+//
+// });
+
+// parseFile.fixMissingStops();
 
 module.exports = app;

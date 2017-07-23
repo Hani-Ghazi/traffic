@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.use(userMiddleware.checkLogin);
 
-router.get('/', directionMiddleware.getDirection);
+router.post('/', directionMiddleware.getDirection)
+  .get('/all', directionMiddleware.getAllGraph)
 
 
 

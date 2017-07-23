@@ -2,6 +2,7 @@ const models = require('../models');
 const xlsx = require('node-xlsx');
 const _ = require('lodash');
 const Promise = require('bluebird');
+const mongoose = require('mongoose');
 
 module.exports = {
 
@@ -78,27 +79,41 @@ module.exports = {
   countStops: function () {
     models.bus.find({})
       .then(function (buses) {
-        if(!buses) return ;
-        buses.forEach(function(bus){
-          models.busStop.find({bus: bus.id})
-            .then(function(stops){
+        if (!buses) return;
+        buses.forEach(function (bus) {
+          models.busStop.find({bus: mongoose.Types.ObjectId(bus.id)})
+            .then(function (stops) {
               bus.stopsCount = stops.length;
               bus.save(function (err) {
-                if(err) console.log("errr is: "+ err);
+                if (err) console.log("errr is: " + err);
               });
             });
         });
       });
   },
-  setDefaultStopsOrder: function() {
+  setDefaultStopsOrder: function () {
     var index = 1;
     models.busStop.find({}, function (err, stops) {
-      if(err) return;
-      stops.forEach(function(stop){
+      if (err) return;
+      stops.forEach(function (stop) {
         stop.order = index++;
         stop.save();
       });
     });
+  },
+  fixMissingStops: function () {
+    models.stop.find({})
+      .then(function (stops) {
+
+        stops.forEach(function (stop) {
+          models.busStop.findOne({stop: stop.id})
+            .then(function (exist) {
+              if (!exist) {
+                stop.remove();
+              }
+            })
+        });
+      });
   }
 }
 

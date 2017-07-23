@@ -22,6 +22,7 @@ busStopSchema.statics.AllStopByBusId = function (busId) {
     return Promise.reject();
   return thisModel.find({bus: mongoose.Types.ObjectId(busId)})
     .populate('stop', constants.stop.defautlFields)
+    .sort('order')
     .then(function (stops) {
       return stops;
     })

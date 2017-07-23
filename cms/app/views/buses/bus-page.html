@@ -21,7 +21,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12" ng-if="!dick">
-                <ng-map zoom="14" center="{{directions[0].origin.lat}}, {{directions[0].origin.lng}}"
+                <ng-map zoom="14"
                         style="height: 600px">
                   <directions ng-repeat="direction in directions"
                               draggable="true"
@@ -34,12 +34,12 @@
                   >
                   </directions>
                   <marker ng-repeat="stop in stops"
-                          position="{{stop.lat}}, {{stop.lng}}"
+                          position="{{stop.stop.lat}}, {{stop.stop.lng}}"
                           draggable="true"
                           on-dragend="justLog(this, {{stop}})"
-                          label="{{stop.arName}}"
-                          title="{{stop.arName}}"
-                          icon="{{stop.new? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png': ''}}"
+                          label="{{stop.stop.arName}}"
+                          title="{{stop.stop.arName}}"
+                          icon="{{stop.stop.new? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png': ''}}"
                   >
                   </marker>
                 </ng-map>
