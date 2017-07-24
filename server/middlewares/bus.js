@@ -94,5 +94,20 @@ module.exports = {
     }).then(function () {
       res.json();
     }).catch(next);
+  },
+  getAllBusMap: function (req, res, next) {
+    models.busStop.aggregate([
+      {
+        $group: {
+          _id: "$bus",
+          stops: {$push: {stop: "$stop", order: "$order"}}
+        }
+      }
+    ]).then(function (results) {
+      var promises = [];
+      models.stop.populate(results, {path: "stops.stop"}).then(function (ans) {
+        res.json(ans);
+      })
+    }).catch(next);
   }
 }

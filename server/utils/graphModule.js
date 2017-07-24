@@ -9,6 +9,7 @@ var fs = require('fs');
 var path = require('path');
 
 var gmAPI;
+var countWalkingEdges = 0;
 
 var publicConfig = {
   key: config.map.APIKEY,
@@ -27,32 +28,32 @@ function getDistance(origin, destination, edge, mode) {
     destinations: destination.lat + ',' + destination.lng,
     travelMode: mode || 'DRIVING'
   };
-  // console.log(params);
   gmAPI.distance(params, function (err, result) {
     if (err) {
       console.log("error", err);
       return;
     }
     console.log("result", result);
-    // if (edge && result.status == 'OK') {
-    //   edge.distance = result.rows[0].elements[0].distance.value;
-    //   edge.duration = result.rows[0].elements[0].duration.value;
-    //   if (edge.duration) {
-    //     edge.save(function (err) {
-    //       if (err)
-    //         console.log(err);
-    //     });
-    //   }
-    //   if (mode == "WALKING") { // reverse the edge
-    //     models.graph.create({
-    //       origin: edge.destination,
-    //       destination: edge.origin,
-    //       distance: edge.distance,
-    //       duration: edge.duration,
-    //       type: "WALKING"
-    //     })
-    //   }
-    // }
+    if (edge && result.status == 'OK') {
+      edge.distance = result.rows[0].elements[0].distance.value;
+      edge.duration = result.rows[0].elements[0].duration.value;
+      if (edge.duration) {
+        edge.save(function (err) {
+          if (err)
+            console.log(err);
+        });
+      }
+      if (mode == "WALKING") { // reverse the edge
+        models.graph.create({
+          origin: edge.destination,
+          destination: edge.origin,
+          distance: edge.distance,
+          duration: edge.duration,
+          type: "WALKING"
+        })
+        countWalkingEdges++;
+      }
+    }
   });
 }
 
@@ -71,11 +72,11 @@ function checkWalkingDistance(origin, destination) {
     Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c;
-  return d < 2.0;
+  return d;
 }
 
 var res = [];
-var countWalkingEdges = 0;
+
 
 function findEdge(origin, destination) {
   return models.graph.findOne({
@@ -150,7 +151,7 @@ function walkingEdges() {
     .then(function (stops) {
       for (var i = 0; i < stops.length - 1; i++) {
         for (var j = i + 1; j < stops.length; j++) {
-          if (checkWalkingDistance(stops[i], stops[j])) {
+          if (checkWalkingDistance(stops[i], stops[j]) < 2.0) {
             findEdge(stops[i], stops[j]);
           }
           total++;
@@ -181,7 +182,7 @@ module.exports = {
     if (!gmAPI)
       initMap();
     // drivingEdges();
-    // walkingEdges();
+    walkingEdges();
     getDistance({lat: 33.531589, lng: 36.316468}, {lat: 33.5254853879807, lng: 36.3056749825562}, null, "DRIVING");
   },
   writeGraphFile: function () {
@@ -199,8 +200,8 @@ module.exports = {
         });
         file.write(arr.length + '\n');
         arr.forEach(function (edge) {
-          if(edge.duration) {
-            if(edge.type == "WALKING")
+          if (edge.duration) {
+            if (edge.type == "WALKING")
               edge.duration += 600;
             file.write(edge.origin + ' ' + edge.destination + ' ' + edge.duration + '\n');
           }
@@ -220,18 +221,18 @@ module.exports = {
           console.log('stdout: ' + stdout);
           var lines = stdout.split('\n');
           _.forEach(lines, function (line) {
-            if(line[0] == '['){
+            if (line[0] == '[') {
               var temp = line.split(':');
               result.push({total: temp[1], stops: []});
               return;
             }
-            if(line.indexOf('Path') != -1 || line == "" ) {
+            if (line.indexOf('Path') != -1 || line == "") {
               pathNo++;
               return;
             }
             var segments = line.split(' ');
             result[pathNo].stops.push(segments[0]);
-            if(result.length == 3){
+            if (result.length == 3) {
               return result;
             }
           });
@@ -244,13 +245,45 @@ module.exports = {
       }, 500)
     });
 
-    // return models.busStop.find({bus: mongoose.Types.ObjectId('597337ed43583552f3491bf1')})
-    //   .sort('order')
-    //   .then(function (stops) {
-    //     var s = stops[0].stop.toHexString(), d = stops[stops.length - 1].stop.toHexString();
-    //     console.log('origin: ', s);
-    //     console.log('destination: ', d);
-    //
-    //   });
+  },
+  getNearestStop: function (lat, lng) {
+    return models.stop.find({})
+      .then(function (stops) {
+        var bestMatch = 10000;
+        var bestStopMatch = null;
+        stops.forEach(function (stop) {
+          var temp = checkWalkingDistance({lat: lat, lng: lng}, stop);
+          if(bestMatch > temp) {
+            bestMatch = temp;
+            bestStopMatch = stop;
+          }
+        });
+        return bestStopMatch;
+      })
+  },
+  fixMissingDriving: function () {
+    initMap();
+    models.graph.find({type: "DRIVING"})
+      .populate('origin')
+      .populate('destination')
+      .then(function (stops) {
+        stops.forEach(function (stop, index) {
+          if(!index) return;
+          if(checkWalkingDistance(stop.origin, stop.destination) < 2.0){
+            setTimeout(function () {
+              var edge = new models.graph({
+                origin: stop.origin.id,
+                destination: stop.destination.id,
+                type: 'WALKING'
+              });
+              getDistance(stop.origin, stop.destination, edge, "WALKING");
+            }, 100 * index);
+          }
+
+        })
+      })
+    setTimeout(function () {
+      console.log(countWalkingEdges);
+    }, 10000)
   }
 }

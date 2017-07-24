@@ -21,7 +21,20 @@ var issueSchema = new mongoose.Schema({
   type: {
     type: String,
     default: 'danger',
-    enum: ['dange' , 'type2', 'type3']
+    enum: ['dange' , 'block', 'traffic']
+  },
+  origin: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'stop'
+  },
+  destination:{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'stop'
+  },
+  desc:{
+
   },
   isClosed: {
     type: Boolean,

@@ -11,6 +11,8 @@ router
 
   .post('/', middleware.createNewStop)
 
+  .post('/nearest', middleware.nearestStop)
+
   .get('/:stopId', middleware.getStopById)
 
   .put('/:stopId', middleware.updateStop)

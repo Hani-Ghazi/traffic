@@ -25,5 +25,9 @@ angular.module('trafficCMS.models')
       return Restangular.one(route).customPOST({arName: arName});
     };
 
+    Bus.allBusMap = function () {
+      return Restangular.one(route + '/map').get();
+    };
+
     return Bus;
   });

@@ -23,25 +23,27 @@
               <div class="col-md-12" ng-if="!dick">
                 <ng-map zoom="14"
                         style="height: 600px">
-                  <directions ng-repeat="direction in directions"
-                              draggable="true"
-                              panel="directions-panel"
-                              travel-mode="DRIVING"
-                              origin="{{direction.origin.lat}}, {{direction.origin.lng}}"
-                              waypoints="{{direction.wayPoints}}"
-                              destination="{{direction.destination.lat}}, {{direction.destination.lng}}" ,
-                              suppress-markers="true"
-                  >
-                  </directions>
-                  <marker ng-repeat="stop in stops"
-                          position="{{stop.stop.lat}}, {{stop.stop.lng}}"
-                          draggable="true"
-                          on-dragend="justLog(this, {{stop}})"
-                          label="{{stop.stop.arName}}"
-                          title="{{stop.stop.arName}}"
-                          icon="{{stop.stop.new? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png': ''}}"
-                  >
-                  </marker>
+                  <div>
+                    <directions ng-repeat="direction in directions"
+                                draggable="true"
+                                panel="directions-panel"
+                                travel-mode="DRIVING"
+                                origin="{{direction.origin.lat}}, {{direction.origin.lng}}"
+                                waypoints="{{direction.wayPoints}}"
+                                destination="{{direction.destination.lat}}, {{direction.destination.lng}}" ,
+                                suppress-markers="true"
+                    >
+                    </directions>
+                    <marker ng-repeat="stop in stops"
+                            position="{{stop.stop.lat}}, {{stop.stop.lng}}"
+                            draggable="true"
+                            on-dragend="justLog(this, {{stop}})"
+                            label="{{stop.stop.arName}}"
+                            title="{{stop.stop.arName}}"
+                            icon="{{stop.stop.new? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png': ''}}"
+                    >
+                    </marker>
+                  </div>
                 </ng-map>
               </div>
             </div>
@@ -66,11 +68,13 @@
                     <md-button ng-if="currentUser.permissions.buses.edit && isEditing" class="md-raised md-primary"
                                ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
                                translate="bus.actions.save" ng-click="saveEdit()"></md-button>
-                    <md-select ng-model="newStop" class="md-default-theme col-md-4" ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}">
-                      <md-option ng-repeat="stop in allStops" ng-value="stop"> {{stop.arName}} </md-option>
+                    <md-select ng-model="newStop" class="md-default-theme col-md-4"
+                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}">
+                      <md-option ng-repeat="stop in allStops" ng-value="stop"> {{stop.arName}}</md-option>
                     </md-select>
                     <md-button ng-if="currentUser.permissions.buses.edit && isEditing" class="md-raised md-default"
-                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}" ng-disabled="!newStop"
+                               ng-class="{'pull-right': !app.setting.rtl, 'pull-left': app.setting.rtl}"
+                               ng-disabled="!newStop"
                                translate="bus.actions.addStop" ng-click="addStop(newStop)"></md-button>
 
                   </div>

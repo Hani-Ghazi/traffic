@@ -2,6 +2,7 @@ const models = require('../models');
 const errors = require('../utils/errors');
 const constants = require('../utils/constansts');
 const utils = require('../utils');
+const graphModule = require('../utils/graphModule');
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const tempFile = require('../utils/tempFile');
@@ -44,9 +45,13 @@ module.exports = {
   updateStop: function (req, res, next) {
     models.stop.update({_id: mongoose.Schema.Types.ObjectId(req.params.stopId)}, req.body)
       .then(function (err) {
-        // err.result
-
+          res.json();
       }).catch(next);
+  },
+  nearestStop: function (req, res, next) {
+    graphModule.getNearestStop(req.body.lat, req.body.lng).then(function (bestMatch) {
+      res.json(bestMatch);
+    }).catch(next);
   }
 };
 

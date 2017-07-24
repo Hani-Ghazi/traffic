@@ -15,9 +15,9 @@ var usersRoutes = require('./routes/users');
 var busesRoutes = require('./routes/buses');
 var stopsRoutes = require('./routes/stops');
 var directionRoutes = require('./routes/directios');
+var issueRoutes = require('./routes/issues');
+
 var app = express();
-
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -32,10 +32,11 @@ app.use('/users', usersRoutes);
 app.use('/buses', busesRoutes);
 app.use('/stops', stopsRoutes);
 app.use('/direction', directionRoutes);
+// app.use('issues', issueRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = {};
   err.status = 404;
   next(err);
 });
@@ -57,12 +58,15 @@ app.use(utils.errorHandler);
 
 // graphModule.initGraph();
 
+// graphModule.test();
 
 // graphModule.writeGraphFile();
 
 // graphModule.testJar().then(function (result) {
 //
 // });
+
+graphModule.fixMissingDriving();
 
 // parseFile.fixMissingStops();
 

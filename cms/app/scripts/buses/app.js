@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('trafficCMS.buses', [])
-  .config(function($stateProvider) {
+  .config(function ($stateProvider) {
     $stateProvider.state('app.buses', {
       url: '/buses?page&count',
       templateUrl: 'views/buses/buses-page.html',
@@ -12,6 +12,30 @@ angular.module('trafficCMS.buses', [])
       resolve: {
         authorize: function (authorization) {
           return authorization.authorize();
+        }
+      }
+    }).state('app.allBuses', {
+      url: '/buses/map',
+      templateUrl: 'views/buses/buses-map-page.html',
+      controller: 'BusesMapCtrltest',
+      params: {
+        busMap: undefined
+      },
+      data: {
+        requiredPermission: 'buses.list'
+      },
+      resolve: {
+        googleApi: function () {
+          return loadGoogleMaps();
+        },
+        busMap: function ($q, authorization, models) {
+          return authorization.authorize().then(function () {
+            var deferred = $q.defer();
+            models.bus.allBusMap().then(function (res) {
+              deferred.resolve(res);
+            }, deferred.reject);
+            return deferred.promise;
+          });
         }
       }
     }).state('app.bus', {
@@ -26,8 +50,8 @@ angular.module('trafficCMS.buses', [])
         child: true
       },
       resolve: {
-        bus: function($rootScope, $q, $state, $stateParams, authorization, models) {
-          return authorization.authorize().then(function() {
+        bus: function ($rootScope, $q, $state, $stateParams, authorization, models) {
+          return authorization.authorize().then(function () {
             var deferred = $q.defer();
             if (angular.isDefined($stateParams.bus) && $stateParams.bus !== null) {
               deferred.resolve($stateParams.bus.clone ? $stateParams.bus.clone() : angular.copy($stateParams.bus));
@@ -42,7 +66,7 @@ angular.module('trafficCMS.buses', [])
               deferred.resolve(models.bus.one(''));
             }
             else {
-              models.bus.get($stateParams.busId).then(function(bus) {
+              models.bus.get($stateParams.busId).then(function (bus) {
                 deferred.resolve(bus);
               }, deferred.reject);
             }
@@ -53,5 +77,5 @@ angular.module('trafficCMS.buses', [])
           return loadGoogleMaps();
         }
       }
-    });
+    })
   });

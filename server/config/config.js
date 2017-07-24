@@ -13,5 +13,6 @@ module.exports = {
     //APIKEY: 'AIzaSyDS2UxULw1kCsEKSWRASAisXAPoSl6ZsfM'
     // APIKEY: 'AIzaSyCoWp1D96F9yYGF1kxIcI2_59hw7UFCNKo'
     // APIKEY: 'AIzaSyAtvBiaCtEpJ6sWoZG18svEHQKCfuLlL1I'
+    // AIzaSyAgxsuUAYSPeOW3RJPeBi2uNmREEuS35Ls
   }
 }

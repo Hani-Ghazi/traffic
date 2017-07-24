@@ -8,11 +8,11 @@ angular.module('trafficCMS.buses')
     $scope.newStop = undefined;
 
 
-    var sortStops = function () {
-      $scope.stops.sort(function (a, b) {
-        return a.stop.order - b.stop.order;
-      });
-    };
+      var sortStops = function () {
+        $scope.stops.sort(function (a, b) {
+          return a.stop.order - b.stop.order;
+        });
+      };
 
     $scope.initMap = function () {
       sortStops();
