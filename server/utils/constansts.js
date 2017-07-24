@@ -7,6 +7,9 @@ var constants = {
   },
   stop: {
     defautlFields: 'arName enName lat lng'
+  },
+  issue: {
+    defautlFields:'creator submitTime startTime finishTime origin destination desc isClosed upVoteCount downVoteCount type'
   }
 };
 

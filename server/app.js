@@ -32,7 +32,7 @@ app.use('/users', usersRoutes);
 app.use('/buses', busesRoutes);
 app.use('/stops', stopsRoutes);
 app.use('/direction', directionRoutes);
-// app.use('issues', issueRoutes);
+app.use('/issues', issueRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -66,7 +66,7 @@ app.use(utils.errorHandler);
 //
 // });
 
-graphModule.fixMissingDriving();
+// graphModule.fixMissingDriving();
 
 // parseFile.fixMissingStops();
 

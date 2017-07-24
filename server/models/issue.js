@@ -8,20 +8,21 @@ var issueSchema = new mongoose.Schema({
     ref: 'user'
   },
   submitTime: {
-    type: mongoose.Types.Date,
-    required: true
+    type: Date,
+    required: true,
+    default: Date.now
   },
   startTime: {
-    type:mongoose.Types.Date,
+    type: Date,
     required: true
   },
   finishTime: {
-    type: mongoose.Types.Date
+    type: Date
   },
   type: {
     type: String,
     default: 'danger',
-    enum: ['dange' , 'block', 'traffic']
+    enum: ['danger' , 'block', 'traffic']
   },
   origin: {
     type: mongoose.Schema.Types.ObjectId,
@@ -34,11 +35,19 @@ var issueSchema = new mongoose.Schema({
     ref: 'stop'
   },
   desc:{
-
+    type: String
   },
   isClosed: {
     type: Boolean,
     default: false
+  },
+  upVoteCount: {
+    type: Number,
+    default: 0
+  },
+  downVoteCount: {
+    type: Number,
+    default: 0
   }
 });
 

@@ -147,6 +147,11 @@ angular.module('trafficCMS.i18n')
     stopsNumber: 'Stops number',
     length: 'Length',
   },
+  issue: {
+    listPage: {
+      noData: 'No Isseus yet. You can create one by using the button at the top.'
+    }
+  },
   stop: {
     listPage: {
       title: 'Stops List'

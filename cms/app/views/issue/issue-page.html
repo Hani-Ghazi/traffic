@@ -1,0 +1,42 @@
+<form name="issueForm" ng-class="{'rtl': app.setting.rtl}" novalidate disable-on-loading="isLoading">
+  <div layout="column" class="card" ng-class="{'rtl': app.setting.rtl}">
+    <div class="card-heading">
+      <h2>Issue Page</h2>
+    </div>
+    <md-content layout-padding>
+      <md-input-container class="col-md-4">
+          <label translate="Origin"></label>
+          <md-select ng-model="issue.origin" class="md-default-theme" style="width: 100%"
+                     ng-class="{'pull-right': app.setting.rtl, 'pull-left': !app.setting.rtl}">
+            <md-option ng-repeat="stop in stops" ng-value="stop"> {{stop.arName}}</md-option>
+          </md-select>
+      </md-input-container>
+      <md-input-container class="col-md-4 ">
+          <label translate="Destination"></label>
+          <md-select ng-model="issue.destination" class="md-default-theme" style="width: 100%"
+                     ng-class="{'pull-right': app.setting.rtl, 'pull-left': !app.setting.rtl}">
+            <md-option ng-repeat="stop in stops" ng-value="stop"> {{stop.arName}}</md-option>
+          </md-select>
+      </md-input-container>
+      <md-input-container class="col-md-4">
+        <label translate="Type"></label>
+        <md-select ng-model="issue.type" class="md-default-theme" style="width: 100%"
+                   ng-class="{'pull-right': app.setting.rtl, 'pull-left': !app.setting.rtl}">
+          <md-option ng-repeat="type in types" ng-value="type"> {{type}}</md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="col-md-12">
+        <label translate="Start time"></label>
+        <md-datepicker ng-model="issue.startTime" style="width: 100%" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+      </md-input-container>
+      <md-input-container class="col-md-12">
+        <label translate="Description"></label>
+        <textarea rows="3" ng-model="issue.desc" class="md-default-theme col-md-12" ></textarea>
+      </md-input-container>
+      <md-input-container>
+        <md-button ng-if="isNew" class="md-raised md-primary" translate="Save Issue" ng-click="saveIssue()"></md-button>
+        <md-button ng-if="!isNew" class="md-raised md-primary" translate="Update Issue" ng-click="saveIssue()"></md-button>
+      </md-input-container>
+    </md-content>
+  </div>
+</form>

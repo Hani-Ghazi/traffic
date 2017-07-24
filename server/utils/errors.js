@@ -9,6 +9,9 @@ module.exports = {
     code: 403,
     status: 403
   },
+  issue:{
+    upVote: 'user_already_upvoted'
+  },
   users: {
     emailExists: {
       error: 'email_already_exists',

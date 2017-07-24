@@ -25,6 +25,11 @@ angular.module('trafficCMS.login')
           list: true,
           view: true,
           edit: isAdmin
+        },
+        issue: {
+          list: true,
+          view: true,
+          edit: true
         }
       }
     };

@@ -34,7 +34,8 @@ angular.module('trafficCMS', [
   'trafficCMS.basic',
   'trafficCMS.users',
   'trafficCMS.buses',
-  'trafficCMS.stops'
+  'trafficCMS.stops',
+  'trafficCMS.issues'
 ]).constant('_', _)
   .config(function($stateProvider, $urlRouterProvider, $localStorageProvider, $mdDateLocaleProvider) {
   $localStorageProvider.setKeyPrefix('trafficCMS');

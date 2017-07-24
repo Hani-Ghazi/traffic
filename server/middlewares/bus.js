@@ -105,6 +105,11 @@ module.exports = {
       }
     ]).then(function (results) {
       var promises = [];
+      results.forEach(function (row) {
+        row.stops.sort(function (a, b) {
+          return a.order > b.order;
+        });
+      });
       models.stop.populate(results, {path: "stops.stop"}).then(function (ans) {
         res.json(ans);
       })

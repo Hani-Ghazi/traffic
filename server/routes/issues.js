@@ -1,12 +1,12 @@
 const express = require('express');
 const issueMiddleware = require('../middlewares/issue');
 const userMiddleware = require('../middlewares/user');
+const router = express.Router();
 
-const router = express.Route();
-
-router.use(userMiddleware.checkLogin());
+router.use(userMiddleware.checkLogin);
 
 router
+  .get('/', issueMiddleware.getIssues)
   .post('/', issueMiddleware.createIssue)
   .get('/:issueId', issueMiddleware.getIssue)
   .put('/:issueId', issueMiddleware.updateIssue)

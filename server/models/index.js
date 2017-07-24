@@ -10,7 +10,9 @@ var models = {
   bus: require('./bus'),
   stop: require('./stops'),
   busStop: require('./busStop'),
-  graph: require('./graph')
+  graph: require('./graph'),
+  issue: require('./issue'),
+  issueVote: require('./issueVote')
 };
 
 var schemas = Object.keys(models).map(function (key) {
@@ -40,7 +42,7 @@ models.connect = function () {
       resolve();
     })
   })
-}
+};
 
 module.exports = models;
 
